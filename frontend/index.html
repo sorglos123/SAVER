@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> SAVER </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1> Willkommen bei SAVER! </h1>
+        <h2> Bitte melden Sie sich an: </h2>
+    </header>
+    <main id="app">
+        <form @submit.prevent="login()">
+            <label for="username">Benutzername</label><br>
+            <input v-model="username" name="username" id="username"><br>
+            <label for="passwd">Passwort</label><br>
+            <input v-model="passwd" name="passwd" id="passwd"><br>
+            <button type="submit">Login</button>
+        </form>
+        <pre v-if="created">
+            {{JSON.stringify(created, null, 2)}}
+        </pre>
+        <p> Bitte geben Sie Ihre Zugangsdaten ein. Sobald sie sich eingeloggt haben, können Sie all Ihre Belegdaten
+            einsehen. </p>
+    </main>
+    <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

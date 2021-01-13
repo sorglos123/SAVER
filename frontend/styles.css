@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+header h1 {
+    margin: 1rem;
+}
+
+header h2 {
+    margin: 1rem;
+}
+
+#app {
+    width: 80%;
+    margin: 0 auto;
+}
