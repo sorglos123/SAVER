@@ -1,0 +1,18 @@
+{
+  "name": "firsttryexpress",
+  "version": "1.0.0",
+  "description": "This is a first try in creating a typescript/javascript-express-app with node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
+    "start": "node dist/server.js"
+  },
+  "author": "Benjamin Krause",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "14.14.12",
+    "typescript": "^4.1.2",
+    "express": "^4.17.1"
+  }
+}
