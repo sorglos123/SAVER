@@ -1,5 +1,7 @@
 import * as express from "express";
 import * as body_parser from "body-parser";
+import * as mariadb from "mariadb";
+// const mariadb = require('mariadb');
 
 const server = express();
 const port = 4000;
