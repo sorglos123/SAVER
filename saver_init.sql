@@ -22,9 +22,13 @@ CREATE TABLE `receipts` (
 CREATE TABLE `items`(
     `item_id` int PRIMARY KEY AUTO_INCREMENT,
     `receipt_id` int,
+    `user_id` int,
     `product_name` varchar(50),
     -- references to receipt
     FOREIGN KEY(receipt_id) REFERENCES receipts(receipt_id)
+    -- references to user
+    -- referencing the user per item allows easy search on item level
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE `volumes`(
