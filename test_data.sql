@@ -61,7 +61,7 @@ INSERT INTO prices(item_id, price) VALUES
     (7, 1.00),
     (8, 1.39),
     (9, 0.89),
-    (10. 5.37);
+    (10, 5.37);
 
 INSERT INTO categories(item_id, category) VALUES
     (5, 'Kaese'),
