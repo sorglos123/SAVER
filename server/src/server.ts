@@ -1,73 +1,36 @@
 import * as express from "express";
-import * as body_parser from "body-parser";
-import * as mariadb from "mariadb";
-// const mariadb = require('mariadb');
+import * as bodyParser from "body-parser";
+import * as cors from "cors";
+import * as morgan from "morgan";
 
-const server = express();
-const port = 4000;
+const app = express();
+const port = process.env.PORT || 4000;
 
-console.log('Node.js server running...');
+app.use(morgan('combine'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
 
-// Spezifiziere den Port, auf dem der Server lauscht
-server.listen(port, () => {
-    console.log('Server listening at port ' + port);
+app.listen(port, () => {  
+    console.log('Listening on port ' + port);
 });
 
-// Jede Funtion server.<methode> ist ein sog. route handler!
-/**
- * Ein GET-Request an den Server unter "/" liefert index.html zurück.
- */
-server.get("/", (req, res) => {
-    /* Stelle eine HTML-Seite bereit, bspw. res.sendFile(lokale Pfadangabe); */
+/* Route 0: Hello World :-) */
+app.get('/status', (req,res) => {
+    res.send({
+        message: 'Hello World!'
+    });
 });
 
-/**
- * Per GET-Request an den Server unter "/:id", wobei :id ein URL-Parameter ist, 
- * kann die ID ausgelesen werden & entsprechend darauf reagiert werden.
- */
-server.get("/:id", (req, res) => {
-    const itemID : number = parseInt(req.params.id);
-    
-    if (itemID == 0) {
-        /* Mach irgendetwas */
-    } else {
-        /* Mach irgendetwas anderes */
-    }
+/* Route 1: 
+1) Server bekommt Login-Daten... 
+    ... vom Frontend im Format { benutzername 'abc', passwort: 'xyz' }; 
+2) Danach schaut in der Datenbank, ob ein entsprechender Datensatz vorhanden ist.  
+*/
+app.post('/register', (req, res) => {    
+    console.log('Benutzername: ' + req.body.email);
+    console.log('Passwort: ' + req.body.passwd);
+    res.send({
+        message: `Registration of ${req.body.email} was successful!`
+    })  
 });
-
-/**
- * Ein GET-Request an den Server unter "/json" liefert eine JSON-Datei mit der Nachricht 
- * "Hello World" zurück.
- */
-server.get("/json", (req, res) => {
-    res.json({ message: "Hello world!"});
-});
-
-/**
- * Benutze body_parser als Middleware zum Parsen von JSON-Request-Bodys.
- */
-server.use(body_parser.json());
-
-/**
- * Ein POST-Request an den Server unter "/items" fügt dem Array ein im Request-Body spezifiziertes
- * Element zur weiteren Verarbeitung hinzu.
- */
-server.post("/items", (req, res) => {
-    
-})
-
-/**
- * Durch einen PUT-Request kann eine Ressource mit der angegebenen ID 
- * auf dem Server geupdatet werden.
- */
-server.put("/items/:id", (req, res) => {
-
-});
-
-/**
- * Durch einen DELETE-Request kann eine Ressource mit der angegebenen ID 
- * auf dem Server gelöscht werden.
- */
-server.delete("/items/:id", (req, res) => {
-
-})
