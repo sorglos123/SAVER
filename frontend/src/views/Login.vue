@@ -17,7 +17,7 @@
           <div class="form">
             <form @submit.prevent="login()">
               <br> <h3> Bitte loggen Sie sich ein: </h3> <br>
-              <input v-model="username" name="username" id="username" placeholder="E-Mail-Adresse"><br><br>
+              <input v-model="email" name="email" id="email" placeholder="E-Mail-Adresse"><br><br>
               <input v-model="passwd" name="passwd" id="passwd" placeholder="Passwort"><br><br>
               <button class="button" type="submit">Login</button> <br>
               <br> <p> Sie haben noch kein Benutzerkonto? </p>
@@ -84,12 +84,14 @@ main {
   border-radius: 2rem 2rem 0rem 0rem;
   /* margin: 2rem 0rem; */
   padding: 1rem 3rem;
+  color: #386928;
 }
 
 .board {
   display: flex;
   align-items: center;
   border-radius: 2rem;
+  color: #386928
 }
 
 .infotext {
@@ -99,6 +101,7 @@ main {
   justify-content: center;
   margin: 2rem 0rem;
   padding: 1rem 3rem;
+  color: #386928
 }
 
 .form {
@@ -106,6 +109,7 @@ main {
   display: flex;
   margin: 2rem 0rem;
   padding: 1rem 3rem;
+  color: #386928
 }
 
 .circle1, .circle2 {

@@ -8,6 +8,7 @@
         <input type="email" name="email" v-model="email" placeholder="E-Mail-Adresse"><br><br>
         <input type="passwd" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
         <input type="confirm" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
+        <br> <div class="error" v-html="error"></div> <br>
         <button class="button" @click="register">Registrieren</button>
       </section>
     </main>
@@ -25,19 +26,23 @@ export default {
       firstname: '',
       email: '',
       passwd: '',
-      confirm: ''
-      // passwd & confirm müssen übereinstimmen -> im Backend abfangen!
+      confirm: '',
+      error: null
     }
   },
   methods: {
     async register() {
+      try {
         await AuthenticationService.register({
-        lastname: this.lastname,
-        firstname: this.firstname,
-        email: this.email,
-        passwd: this.passwd,
-        confirm: this.confirm
-      });
+          lastname: this.lastname,
+          firstname: this.firstname,
+          email: this.email,
+          passwd: this.passwd,
+          confirm: this.confirm
+        });
+      } catch(error) {
+          this.error = error.response.data.error;
+      }
     }
   }
 }
@@ -69,6 +74,7 @@ main {
   border-radius: 2rem;
   z-index: 3;
   backdrop-filter: blur(2rem);
+  color: #386928;
 }
 
 .circle1, .circle2 {
@@ -104,6 +110,12 @@ main {
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.error {
+  border-color: red;
+  color: red;
+  z-index: 3;
 }
 
 </style>
