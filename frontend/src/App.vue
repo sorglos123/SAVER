@@ -12,7 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: white;
+  color: black;
 }
 
 #nav {
@@ -29,6 +29,7 @@
 }
 
 body {
-  background: #395B50;
+  /* background: #395B50; */
+  background: linear-gradient(to right top, #55e08b, #78e055);
 }
 </style>
