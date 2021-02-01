@@ -21,7 +21,9 @@
               <input v-model="passwd" name="passwd" id="passwd" placeholder="Passwort"><br><br>
               <button class="button" type="submit">Login</button> <br>
               <br> <p> Sie haben noch kein Benutzerkonto? </p>
-              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"> Dann klicken Sie hier! </a>
+              <button class="button" type="submit">
+                <router-link to="Register"> Registrieren </router-link>
+              </button> <br>
             </form>
           </div>
         </div>

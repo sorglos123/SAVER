@@ -2,6 +2,9 @@
   <div class="basic">
     <main>
       <section class="glass">
+        <button class="button" type="submit">
+                <router-link to="Login"> Zurück zur Login-Seite </router-link>
+        </button> <br>
         <br> <h1> Bitte geben Sie Ihre persönlichen Daten ein! </h1> <br>
         <input type="lastname" name="lastname" v-model="lastname" placeholder="Nachname"><br><br>
         <input type="firstname" name="firstname" v-model="firstname" placeholder="Vorname"><br><br>
@@ -9,7 +12,7 @@
         <input type="passwd" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
         <input type="confirm" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
         <br> <div class="error" v-html="error"></div> <br>
-        <button class="button" @click="register">Registrieren</button>
+        <button class="button" @click="register">Registrierung abschließen</button>
       </section>
     </main>
     <div class="circle1"></div>
