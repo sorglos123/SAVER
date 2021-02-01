@@ -6,8 +6,8 @@ module.exports = {
         console.log('Benutzername: ' + req.body.email);
         console.log('Passwort: ' + req.body.passwd);
         /* <- Hier kommt die Datenbank-Logik -> */
-        res.send({
-            message: `Welcome ${req.body.email}, your login was successful!`
+        res.status(200).send({
+            message: `Hallo ${req.body.email}, Ihr Login war erfolgreich!`
         })
     }
 }

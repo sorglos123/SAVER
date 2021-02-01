@@ -3,7 +3,7 @@
 
 module.exports = {
     status (req,res) {
-        res.send({
+        res.status(200).send({
             message: 'Hello World!'
         });
     }
