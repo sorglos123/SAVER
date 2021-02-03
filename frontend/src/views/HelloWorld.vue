@@ -53,6 +53,20 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: white;
+}
+
+.button {
+  background: #1b4332;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bolder;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 </style>

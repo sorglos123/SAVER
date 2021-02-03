@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Register from '../views/Register.vue';
+// import Register from '../views/Register.vue';
+import Hello from '../views/HelloWorld.vue';
 
 const routes = [
   {
+    path: '/',
+    name: 'Hello',
+    component: Hello
+  },
+  {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
   },
   {
     path: '/login',
