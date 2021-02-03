@@ -18,7 +18,7 @@ app.use(cors());
 
 require('./routes')(app);
 
-const port = process.env.BACKEND_PORT || config.port;
+const port = config.port;
 app.listen(port, () => {  
     console.log('Listening on port ' + port);
 });
