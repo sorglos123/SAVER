@@ -2,15 +2,12 @@
   <div class="basic">
     <main>
       <section class="glass">
-        <button class="button" type="submit">
-                <router-link to="Login"> Zurück zur Login-Seite </router-link>
-        </button> <br>
         <br> <h1> Bitte geben Sie Ihre persönlichen Daten ein! </h1> <br>
-        <input type="lastname" name="lastname" v-model="lastname" placeholder="Nachname"><br><br>
-        <input type="firstname" name="firstname" v-model="firstname" placeholder="Vorname"><br><br>
-        <input type="email" name="email" v-model="email" placeholder="E-Mail-Adresse"><br><br>
-        <input type="passwd" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
-        <input type="confirm" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
+        <input type="text" name="lastname" v-model="lastname" placeholder="Nachname"><br><br>
+        <input type="text" name="firstname" v-model="firstname" placeholder="Vorname"><br><br>
+        <input type="text" name="email" v-model="email" placeholder="E-Mail-Adresse"><br><br>
+        <input type="password" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
+        <input type="password" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
         <br> <div class="error" v-html="error"></div> <br>
         <button class="button" @click="register">Registrierung abschließen</button>
       </section>
@@ -62,8 +59,7 @@ export default {
 
 main {
   min-height: 85vh;
-  /* background: linear-gradient(to right top, #65dfc9, #6cdbeb); */
-  background: linear-gradient(to right top, #55e08b, #78e055);
+  background: linear-gradient(to right top, #40916c, #74c69d);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,7 +73,7 @@ main {
   border-radius: 2rem;
   z-index: 3;
   backdrop-filter: blur(2rem);
-  color: #386928;
+  color: #1b4332;
 }
 
 .circle1, .circle2 {
@@ -96,13 +92,13 @@ main {
 }
 
 .circle2 {
-  bottom: 10%;
+  bottom: 5%;
   right: 10%;
   z-index: 2;
 }
 
 .button {
-  background: linear-gradient(to right top, #55e08b, #78e055);
+  background: linear-gradient(to right top, #40916c, #74c69d);
   border: none;
   color: white;
   padding: 15px 32px;

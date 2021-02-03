@@ -15,13 +15,14 @@
             </div>
           </div>
           <div class="form">
-            <form @submit.prevent="login()">
+            <form >
               <br> <h3> Bitte loggen Sie sich ein: </h3> <br>
-              <input v-model="email" name="email" id="email" placeholder="E-Mail-Adresse"><br><br>
-              <input v-model="passwd" name="passwd" id="passwd" placeholder="Passwort"><br><br>
-              <button class="button" type="submit">Login</button> <br>
+              <input type="text" v-model="email" name="email" id="email" placeholder="E-Mail-Adresse"><br><br>
+              <input type="password" v-model="passwd" name="passwd" id="passwd" placeholder="Passwort"><br><br>
+              <button class="button" @click="login" type="button">Login</button> <br>
+              <br> <div class="error" v-html="error"></div> <br>
               <br> <p> Sie haben noch kein Benutzerkonto? </p>
-              <button class="button" type="submit">
+              <button class="button">
                 <router-link to="Register"> Registrieren </router-link>
               </button> <br>
             </form>
@@ -35,20 +36,25 @@
 </template>
 
 <script>
-import LoginService from '@/services/LoginService'
+import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data () {
     return {
       email: '',
       passwd: '',
+      error: null
     }
   },
   methods: {
     async login() {
-        await LoginService.login({
-        email: this.email,
-        passwd: this.passwd,
-      });
+      try {
+        await AuthenticationService.login({
+          email: this.email,
+          passwd: this.passwd,
+        });
+      } catch(error) {
+        this.error = error.response.data.error;
+      }
     }
   }
 }
@@ -65,7 +71,7 @@ export default {
 
 main {
   min-height: 85vh;
-  background: linear-gradient(to right top, #55e08b, #78e055);
+  background: linear-gradient(to right top, #40916c, #74c69d);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,16 +90,15 @@ main {
 .header {
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   border-radius: 2rem 2rem 0rem 0rem;
-  /* margin: 2rem 0rem; */
   padding: 1rem 3rem;
-  color: #386928;
+  color: #1b4332;
 }
 
 .board {
   display: flex;
   align-items: center;
   border-radius: 2rem;
-  color: #386928
+  color: #1b4332
 }
 
 .infotext {
@@ -103,7 +108,7 @@ main {
   justify-content: center;
   margin: 2rem 0rem;
   padding: 1rem 3rem;
-  color: #386928
+  color: #1b4332
 }
 
 .form {
@@ -111,7 +116,7 @@ main {
   display: flex;
   margin: 2rem 0rem;
   padding: 1rem 3rem;
-  color: #386928
+  color: #1b4332
 }
 
 .circle1, .circle2 {
@@ -124,7 +129,7 @@ main {
 }
 
 .circle1 {
-  bottom: 5%;
+  bottom: 2%;
   left: 12%;
   z-index: 2;
 }
@@ -136,7 +141,7 @@ main {
 }
 
 .button {
-  background: linear-gradient(to right top, #55e08b, #78e055);
+  background: linear-gradient(to right top, #40916c, #74c69d);;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -147,6 +152,12 @@ main {
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.error {
+  border-color: red;
+  color: red;
+  z-index: 3;
 }
 
 </style>
