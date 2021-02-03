@@ -2,14 +2,16 @@
   <div class="basic">
     <main>
       <section class="glass">
-        <br> <h1> Bitte geben Sie Ihre persönlichen Daten ein! </h1> <br>
-        <input type="text" name="lastname" v-model="lastname" autocomplete="off" placeholder="Nachname"><br><br>
-        <input type="text" name="firstname" v-model="firstname" autocomplete="off" placeholder="Vorname"><br><br>
-        <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
-        <input type="password" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
-        <input type="password" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
-        <br> <div class="error" v-html="error"></div> <br>
-        <button class="button" @click="register">Registrierung abschließen</button>
+        <form>
+          <br> <h1> Bitte geben Sie Ihre persönlichen Daten ein! </h1> <br>
+          <input type="text" name="lastname" v-model="lastname" autocomplete="off" placeholder="Nachname"><br><br>
+          <input type="text" name="firstname" v-model="firstname" autocomplete="off" placeholder="Vorname"><br><br>
+          <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
+          <input type="password" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
+          <input type="password" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
+          <br> <div class="error" v-html="error"></div> <br>
+          <button class="button" @click="register">Registrierung abschließen</button>
+        </form>
       </section>
     </main>
     <div class="circle1"></div>

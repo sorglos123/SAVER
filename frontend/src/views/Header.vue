@@ -6,6 +6,7 @@
                     <router-link to="/"> <h1> SAVER </h1> </router-link>
                 </button>
             </div>
+            <!-- TODO: Zeige die Buttons Login/Registrierung nur an, wenn der Benutzer nicht eingeloggt ist -> Store -->
             <div class="buttons">
                 <button class="button">
                     <router-link to="Login"> Login </router-link>

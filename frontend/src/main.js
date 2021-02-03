@@ -1,5 +1,14 @@
- import { createApp } from 'vue';
+import {
+    createApp
+} from 'vue';
 import App from './App.vue';
 import router from './router';
+// import {sync} from 'vuex-router-sync';
+import store from './store/store';
 
-createApp(App).use(router).mount('#app');
+// sync(store, router);
+
+createApp(App).
+use(router).
+use(store).
+mount('#app');
