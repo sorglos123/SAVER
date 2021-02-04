@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:  
+  mariadb:
+    image: mariadb 
+    volumes:
+      - mariaSQL_01:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    
+  adminer:
+    image: adminer:latest
+    restart: always
+    # remove comments if you need to access adminer via port; could be removed entire; possible port conflict with frontend
+    ports:
+      - 8081:8080
+
+  node:
+    build: './node2/server'
+    restart: always
+    #For production it should not ne necessary to expose ports; containers should be able to use internal network directly
+    ports:
+      - 4001:4001
+
+  vue:
+    build: './vue/frontend'
+    restart: always
+    ports:
+      - 8080:8080
+  
+
+volumes:
+  mariaSQL_01:
+    external: true
