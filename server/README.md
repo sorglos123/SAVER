@@ -10,7 +10,11 @@ dem Befehl "npm run start" gestartet werden.
 
 Für Docker Standalone start:
 Build:
+```
 sudo docker build -t backend .
+```
 
 Anschließend den Container starten mit
+```
 sudo docker run -d -p 4001:4001 backend
+```
