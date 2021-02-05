@@ -1,0 +1,30 @@
+{
+  "name": "saver",
+  "version": "1.0.0",
+  "description": "This is the backend for the university project 'saver' ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
+    "dev": "nodemon dist/server.js",
+    "start": "node dist/server.js"
+  },
+  "author": "Benjamin Krause",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "14.14.12",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.5.2",
+    "morgan": "^1.10.0",
+    "typescript": "^4.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
