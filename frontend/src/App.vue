@@ -1,0 +1,49 @@
+<template>
+  <div id="app">
+    <page-header />
+  </div>
+  <!-- <div id="nav">
+    <router-link to="/register">Register</router-link> |
+    <router-link to="/login">Login</router-link>
+  </div> -->
+  <router-view/>
+</template>
+
+<script>
+import PageHeader from '@/views/Header.vue'
+
+export default {
+  name: 'app',
+  components: {
+    PageHeader
+  }
+}
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: black;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+body {
+  /* background: #395B50; */
+  background: linear-gradient(to right top, #40916c, #74c69d);
+}
+</style>
