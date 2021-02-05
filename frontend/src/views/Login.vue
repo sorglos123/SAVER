@@ -52,8 +52,8 @@ export default {
           email: this.email,
           passwd: this.passwd,
         });
-        this.$store.dispatch('setUser', response.data.user);
-        this.$store.dispatch('setToken', response.data.token);
+        // this.$store.dispatch('setUser', response.data.user);
+        // this.$store.dispatch('setToken', response.data.token);
       } catch(error) {
         this.error = error.response.data.error;
       }
