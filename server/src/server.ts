@@ -3,7 +3,11 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as morgan from "morgan";
 
+const {sequelize} = require('./models');
 const config = require('./config/config');
+
+
+const port = config.port;
 
 require('dotenv').config({ 
     path: __dirname + `/../.env` 
@@ -18,8 +22,12 @@ app.use(cors());
 
 require('./routes')(app);
 
-const port = config.port;
-app.listen(port, () => {  
-    console.log('Listening on port ' + port);
-});
+sequelize.sync()
+    .then(() =>{
+        app.listen(port, () => {  
+            console.log('Listening on port ' + port);
+        })
+    })
+
+;
 
