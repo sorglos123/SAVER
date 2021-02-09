@@ -1,6 +1,6 @@
 {
-  "name": "vueproject-v2",
-  "version": "0.1.0",
+  "name": "saver",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
+    "vue-sidebar-menu": "^5.0.0-alpha.7",
     "vuex": "^4.0.0",
     "vuex-router-sync": "^5.0.0"
   },
