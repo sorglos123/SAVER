@@ -17,17 +17,20 @@ services:
       - 8081:8080
 
   node:
-    build: './server'
+    build: './server' 
     restart: always
     #For production it should not ne necessary to expose ports; containers should be able to use internal network directly
     ports:
       - 4001:4001
+    volumes:
+      - ./server/src/controllers:/app/src/controllers
+     
 
-  vue:
-    build: './frontend'
-    restart: always
-    ports:
-      - 8080:8080
+  #vue:
+  #  build: './frontend'
+  #  restart: always
+  #  ports:
+  #    - 8080:8080
   
 
 volumes:

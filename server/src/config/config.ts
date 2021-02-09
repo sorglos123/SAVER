@@ -3,7 +3,7 @@ require('dotenv').config({
 });
 
 module.exports = {
-    port: process.env.BACKEND_PORT || 4001,
+    port: process.env.BACKEND_PORT,
     authentication: {
         jwtSecret: process.env.JWT_SECRET || 'secret'
     }

@@ -16,6 +16,7 @@ import * as jwt from 'jsonwebtoken';
 
 const config = require('../config/config');
 
+
 /* Helper function: gibt einen sehr langen String-Token zurück, welcher bspw. 
     in Zeile 64 oder 83 vom Backend ans Frontend übergeben werden kann. */
 function jwtLogin(user: any) {
