@@ -23,7 +23,6 @@ export const dbConfig = new sequelize.Sequelize (
 )
 
 
-
 db.sequelize = sequelize
 db.Sequelize = dbConfig
 

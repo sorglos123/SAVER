@@ -3,7 +3,7 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as morgan from "morgan";
 
-const {sequelize} = require('./models');
+const {Sequelize} = require('./models');
 const config = require('./config/config');
 
 
@@ -22,7 +22,8 @@ app.use(cors());
 
 require('./routes')(app);
 
-sequelize.sync()
+Sequelize
+    .authenticate()
     .then(() =>{
         app.listen(port, () => {  
             console.log('Listening on port ' + port);
