@@ -14,6 +14,8 @@
 import * as EmailValidator from 'email-validator';
 import * as jwt from 'jsonwebtoken';
 
+import {Users} from "../models/Users";
+
 const config = require('../config/config');
 
 
@@ -35,11 +37,10 @@ function jwtLogin(user: any) {
 /* Route 2: /login = ähnlich wie Registrierung bzgl. DB-Logik */
 
 module.exports = {
-    register(req, res) {
+    async register(req, res) {
         /* Konsolen-Ausgaben nur für Testzwecke */
-        console.log('Benutzername: ' + req.body.lastname);
-        console.log('Passwort: ' + req.body.firstname);
-        console.log('Benutzername: ' + req.body.email);
+        console.log('Benutzername: ' + req.body.user_name);
+        console.log('Email: ' + req.body.email);
         console.log('Passwort: ' + req.body.passwd);
         console.log('Passwort bestätigen: ' + req.body.confirm);
 
@@ -47,26 +48,33 @@ module.exports = {
             ... ob ein vollständiger Datensatz vom Benutzer angegeben wurde und ...
             ... ob Passwort == bestätigtes Passwort; wichtig, BEVOR es in die DB geht! Sowie ...
             ... ob E-Mail-Adresse valide ist (externe Bibliothek) */
-        if ((req.body.lastname != '') && (req.body.firstname != '') && (req.body.email != '') && (req.body.passwd != '') && (req.body.confirm != '')) {
+        if (( req.body.user_name != '') && (req.body.email != '') && (req.body.passwd != '') && (req.body.confirm != '')) {
             if (req.body.confirm == req.body.passwd) {
                 if (EmailValidator.validate(req.body.email)) {
                     /* Benötigen wir auch eine Passwort-Schema-Validierung für unseren Prototypen? */
 
-                    const {
-                        lastname,
-                        firstname,
-                        email,
-                        passwd,
-                        confirm
-                    } = req.body;
+                    
+                    try{
+                        const newUser = await Users.create({
+                            user_name : req.body.user_name,
+                            password : req.body.passwd,
+                            email : req.body.email
+                        });
+                        newUser.save();
+
+                    } catch (err){
+                        console.log(req.body.user_name)
+                        console.log(err)
+                        res.status(400).send({
+                            error: "Something went wrong"
+                        })
+                       
+                    }
                     /* <- Hier kommt die Datenbank-Logik 
                     Bitte beim Beantworten der Anfragen auch den HTTP-Status
                     (200/400/403/...) entsprechend setzen! -> */
 
-                    return res.status(200).send({
-                        message: `Willkommen ${req.body.email}! Ihre Registrierung war erfolgreich!`
-                        /* Helper function hier verwenden: token: jwtLogin(datenbankuser) */
-                    });
+                    ;
                 } else {
                     return res.status(400).send({
                         error: 'Bitte geben Sie eine gültige E-Mail-Adresse an.'
