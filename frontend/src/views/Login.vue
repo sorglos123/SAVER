@@ -3,12 +3,13 @@
     <main>
       <section class="glass">
         <div class="header">
-        <br> <h1> Willkommen bei SAVER </h1> <br>
+        <br> <h1> Willkommen bei SAVER ... </h1> <br>
         </div>
         <div class="board">
           <div class="infotext">
             <div>
-              <p> Diese Anwendung dient der Speicherung, Analyse und Verarbeitung von Kassenzetteln, 
+              <!-- Text eventuell auflockern; Schriftart insgesamt verändern -> etwas lockerer, runder! -->
+              <p> ... deiner Anwendung zur Speicherung, Analyse und Verarbeitung von Kassenbons, 
               Rechnungen und anderen Kaufbelegen. Sie wurde von Sascha Richter und Benjamin Krause 
               im Rahmen des Softwareprojektes im Studiengang Informatik an der BA Leipzig entwickelt. 
               </p>
@@ -21,7 +22,7 @@
               <input type="password" v-model="passwd" name="passwd" id="passwd" placeholder="Passwort"><br><br>
               <button class="button" @click="login" type="button">Login</button> <br>
               <br> <div class="error" v-html="error"></div> <br>
-              <br> <p> Sie haben noch kein Benutzerkonto? </p>
+              <br> <p> Noch kein Benutzerkonto? </p>
               <button class="button">
                 <router-link to="Register"> Registrieren </router-link>
               </button> <br>
@@ -108,8 +109,8 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2rem 0rem;
-  padding: 1rem 3rem;
+  margin: 1rem 0rem;
+  padding: 0rem 1rem;
   color: #1b4332
 }
 
