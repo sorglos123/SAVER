@@ -9,12 +9,12 @@
     https://www.youtube.com/watch?v=H6hM_5ilhqw&t=1323s&ab_channel=freeCodeCamp.org (siehe Teil 2 und 3 der Reihe)
 
     In diesem Tutorial wird das so gemacht, dass das Passwort-Hashing im DB-Modell des Users stattfindet. 
-    So wird in der DB nur ein Passwort-Hash gespeichert! */ 
+    So wird in der DB nur ein Passwort-Hash gespeichert! */
 
 import * as EmailValidator from 'email-validator';
 import * as jwt from 'jsonwebtoken';
 
-import {Users} from "../models/Users";
+import { User } from "../dblogic/user";
 
 const config = require('../config/config');
 
@@ -48,33 +48,25 @@ module.exports = {
             ... ob ein vollständiger Datensatz vom Benutzer angegeben wurde und ...
             ... ob Passwort == bestätigtes Passwort; wichtig, BEVOR es in die DB geht! Sowie ...
             ... ob E-Mail-Adresse valide ist (externe Bibliothek) */
-        if (( req.body.user_name != '') && (req.body.email != '') && (req.body.passwd != '') && (req.body.confirm != '')) {
+        if ((req.body.user_name != '') && (req.body.email != '') && (req.body.passwd != '') && (req.body.confirm != '')) {
             if (req.body.confirm == req.body.passwd) {
                 if (EmailValidator.validate(req.body.email)) {
                     /* Benötigen wir auch eine Passwort-Schema-Validierung für unseren Prototypen? */
-
-                    
-                    try{
-                        const newUser = await Users.create({
-                            user_name : req.body.user_name,
-                            password : req.body.passwd,
-                            email : req.body.email
-                        });
-                        newUser.save();
-
-                    } catch (err){
-                        console.log(req.body.user_name)
-                        console.log(err)
-                        res.status(400).send({
-                            error: "Something went wrong"
+                    try {
+                        const c = new User(req.body.user_name, req.body.passwd, req.body.email);
+                        await c.create();
+                        return res.status(200).send({
+                            message: `Hallo ${req.body.email}, Ihre Registrierung war erfolgreich!`,
                         })
-                       
+                    } catch (error) {
+                        console.log(error);
+                        console.log(error.errno);
+                        if(error.errno == 1062){
+                            return res.status(400).send({
+                            error: 'Die E-Mail Adresse existiert bereits'
+                        })
                     }
-                    /* <- Hier kommt die Datenbank-Logik 
-                    Bitte beim Beantworten der Anfragen auch den HTTP-Status
-                    (200/400/403/...) entsprechend setzen! -> */
-
-                    ;
+                }
                 } else {
                     return res.status(400).send({
                         error: 'Bitte geben Sie eine gültige E-Mail-Adresse an.'
