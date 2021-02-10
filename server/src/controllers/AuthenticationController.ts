@@ -60,13 +60,17 @@ module.exports = {
                         })
                     } catch (error) {
                         console.log(error);
-                        console.log(error.errno);
-                        if(error.errno == 1062){
+                        if (error.errno == 1062) {
                             return res.status(400).send({
-                            error: 'Die E-Mail Adresse existiert bereits'
-                        })
+                                error: 'Die E-Mail Adresse existiert bereits'
+                            })
+                        }
+                        else {
+                            return res.status(400).send({
+                                error: 'Irgendwas ist schief gegangen ¯\_(ツ)_/¯'
+                            })
+                        }
                     }
-                }
                 } else {
                     return res.status(400).send({
                         error: 'Bitte geben Sie eine gültige E-Mail-Adresse an.'
@@ -83,26 +87,25 @@ module.exports = {
             });
         }
     },
-    login(req, res) {
+    async login(req, res) {
         /* Konsolen-Ausgaben nur für Testzwecke */
         console.log('Benutzername: ' + req.body.email);
         console.log('Passwort: ' + req.body.passwd);
 
         if ((req.body.email != '') && (req.body.passwd != '')) {
             if (EmailValidator.validate(req.body.email)) {
+                try {
+                    const c = new User("NA", req.body.passwd, req.body.email);
+                    await c.login();
+                    return res.status(200).send({
+                        message: `Hallo ${req.body.email}, Willkommen zurück!`,
+                    })
+                } catch (error) {
+                    return res.status(400).send({
+                        error: 'Falscher Login und/oder Passwort'
+                    })
+                }
 
-                const {
-                    email,
-                    passwd
-                } = req.body;
-                /* <- Hier kommt die Datenbank-Logik 
-                    Bitte beim Beantworten der Anfragen auch den HTTP-Status
-                    (200/400) entsprechend setzen! -> */
-
-                return res.status(200).send({
-                    message: `Hallo ${req.body.email}, Ihr Login war erfolgreich!`,
-                    /* Helper function hier verwenden: token: jwtLogin(datenbankuser) */
-                });
             } else {
                 return res.status(400).send({
                     error: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.'
