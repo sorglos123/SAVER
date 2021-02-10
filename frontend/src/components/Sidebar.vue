@@ -4,35 +4,28 @@
             <div class="title"> </div>
             <div class="menu-items">
                 <button class="button">
-                    <router-link to="Home" active-class="active" tag="button"> 
+                    <router-link to="/dashboard" active-class="active" tag="button"> 
                         <div class="link-container">
                             Home
                         </div> 
                     </router-link>
                 </button>
                 <button class="button">
-                    <router-link to="/helloworld" active-class="active" tag="button"> 
-                        <div class="link-container">
-                            Hello World
-                        </div> 
-                    </router-link>
-                </button>
-                <button class="button">
-                    <router-link to="/user" active-class="active" tag="button"> 
+                    <router-link to="/dashboard" active-class="active" tag="button"> 
                         <div class="link-container">
                             Meine Belege
                         </div> 
                     </router-link>
                 </button>
                 <button class="button">
-                    <router-link to="/helloworld" active-class="active" tag="button"> 
+                    <router-link to="/dashboard" active-class="active" tag="button"> 
                         <div class="link-container">
                             Meine Statistiken
                         </div> 
                     </router-link>
                 </button>
                 <button class="button">
-                    <router-link to="/helloworld" active-class="active" tag="button"> 
+                    <router-link to="/dashboard" active-class="active" tag="button"> 
                         <div class="link-container">
                             Mein Kalender
                         </div> 
