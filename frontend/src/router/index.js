@@ -26,6 +26,21 @@ const routes = [{
                     import ('../views/home/Dashboard.vue')
             },
             {
+                path: '/receipts',
+                component: () =>
+                    import ('../views/home/Receipts.vue')
+            },
+            {
+                path: '/statistics',
+                component: () =>
+                    import ('../views/home/Statistics.vue')
+            },
+            {
+                path: '/calendar',
+                component: () =>
+                    import ('../views/home/Calendar.vue')
+            },
+            {
                 // Eventuell path: '/user/:id'
                 path: '/user',
                 component: () =>

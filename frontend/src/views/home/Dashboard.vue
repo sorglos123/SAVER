@@ -8,8 +8,7 @@
                     </div>
                     <div class="link">
                         <button class="button">
-                            <router-link to="/user"> Meine Belege </router-link>
-                             <p style="color: transparent"> </p>
+                            <router-link to="/receipts"> Meine Belege </router-link>
                         </button>
                         <div class="text"> 
                             <p> Übersicht über meine hochgeladenen Belege </p>
@@ -25,7 +24,7 @@
                     </div>
                     <div class="link">
                         <button class="button">
-                            <router-link to="/user"> Meine Statistiken </router-link>
+                            <router-link to="/statistics"> Meine Statistiken </router-link>
                         </button>
                         <div class="text"> 
                             <p> Aufbereitung meiner Belegdaten </p>
@@ -41,8 +40,7 @@
                     </div>
                     <div class="link">
                         <button class="button">
-                            <router-link to="/user"> Mein Kalender </router-link>
-                            <p>  </p>
+                            <router-link to="/calendar"> Mein Kalender </router-link>
                         </button>
                         <div class="text"> 
                             <p> Kalendarische Übersicht </p>

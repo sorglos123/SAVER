@@ -11,21 +11,21 @@
                     </router-link>
                 </button>
                 <button class="button">
-                    <router-link to="/dashboard" active-class="active" tag="button"> 
+                    <router-link to="/receipts" active-class="active" tag="button"> 
                         <div class="link-container">
                             Meine Belege
                         </div> 
                     </router-link>
                 </button>
                 <button class="button">
-                    <router-link to="/dashboard" active-class="active" tag="button"> 
+                    <router-link to="/statistics" active-class="active" tag="button"> 
                         <div class="link-container">
                             Meine Statistiken
                         </div> 
                     </router-link>
                 </button>
                 <button class="button">
-                    <router-link to="/dashboard" active-class="active" tag="button"> 
+                    <router-link to="/calendar" active-class="active" tag="button"> 
                         <div class="link-container">
                             Mein Kalender
                         </div> 
