@@ -1,20 +1,18 @@
 <template>
   <div class="hello">
-    <main>
-      <section class="glass">
-        <form>
-          <br> <h1> Persönliche Daten ändern </h1> <br>
-          <input type="text" name="lastname" v-model="lastname" autocomplete="off" placeholder="Nachname"><br><br>
-          <input type="text" name="firstname" v-model="firstname" autocomplete="off" placeholder="Vorname"><br><br>
-          <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
-          <input type="password" name="oldpw" v-model="passwd" placeholder="Aktuelles Passwort"><br><br>
-          <input type="password" name="newpw" v-model="confirm" placeholder="Neues Passwort"><br><br>
-          <input type="password" name="confirm" v-model="confirm" placeholder="Neues Passwort bestätigen"><br><br>
-          <br> <div class="error" v-html="error"></div> <br>
-          <button class="button" @click="updateUser">Abschicken</button>
-        </form>
-      </section>
-    </main>
+    <section class="glass">
+      <form>
+        <br> <h1> Persönliche Daten ändern </h1> <br>
+        <input type="text" name="lastname" v-model="lastname" autocomplete="off" placeholder="Nachname"><br><br>
+        <input type="text" name="firstname" v-model="firstname" autocomplete="off" placeholder="Vorname"><br><br>
+        <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
+        <input type="password" name="oldpw" v-model="passwd" placeholder="Aktuelles Passwort"><br><br>
+        <input type="password" name="newpw" v-model="confirm" placeholder="Neues Passwort"><br><br>
+        <input type="password" name="confirm" v-model="confirm" placeholder="Neues Passwort bestätigen"><br><br>
+        <br> <div class="error" v-html="error"></div> <br>
+        <button class="button" @click="updateUser">Abschicken</button>
+      </form>
+    </section>
     <div class="circle1"></div>
     <div class="circle2"></div>
   </div>
@@ -47,12 +45,14 @@ export default {
   box-sizing: border-box;
 }
 
-main {
+.hello {
   min-height: 85vh;
+  height: auto;
   background: linear-gradient(to right top, #40916c, #74c69d);
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
 }
 
 .glass {
