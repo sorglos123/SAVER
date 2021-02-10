@@ -15,6 +15,8 @@
     </section>
     <div class="circle1"></div>
     <div class="circle2"></div>
+    <div class="circle3"></div>
+    <div class="circle4"></div>
   </div>
 </template>
 
@@ -66,24 +68,34 @@ export default {
   color: #1b4332;
 }
 
-.circle1, .circle2 {
+.circle1, .circle2, .circle3, .circle4 {
   background: white;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
-  width: 20rem;
-  height: 20rem;
   position: absolute;
   border-radius: 50%;
 }
 
 .circle1 {
-  bottom: 0%;
-  left: 22%;
+  width: 15rem;
+  height: 15rem;
+  bottom: 3%;
+  left: 45%;
   z-index: 2;
 }
 
 .circle2 {
-  top: 15%;
-  right: 12%;
+  width: 22rem;
+  height: 22rem;
+  top: 17%;
+  right: 5%;
+  z-index: 2;
+}
+
+.circle3 {
+  width: 20rem;
+  height: 20rem;
+  top: 22%;
+  left: 19%;
   z-index: 2;
 }
 
