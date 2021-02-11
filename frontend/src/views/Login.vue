@@ -47,8 +47,10 @@
               <br> <div class="error" v-html="error"></div> <br>
               <br> <p> Noch kein Benutzerkonto? </p>
               <button class="button">
+                <!-- Wird noch anders formatiert, da es ein Router-Link in einem Button ist; das muss noch 
+                angepasst werden -->
                 <router-link to="Register"> Registrieren </router-link>
-              </button> <br>
+              </button>
             </form>
           </div>
         </div>
@@ -193,7 +195,8 @@ main {
 }
 
 .button {
-  background: linear-gradient(to right top, #40916c, #74c69d);;
+  background: linear-gradient(to right top, #40916c, #74c69d);
+  background: linear-gradient(to bottom, #bbd2c5, #536976, #292e49); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: none;
   color: white;
   padding: 15px 32px;
