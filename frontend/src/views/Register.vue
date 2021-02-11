@@ -4,13 +4,12 @@
       <section class="glass">
         <form>
           <br> <h1> Bitte geben Sie Ihre persönlichen Daten ein! </h1> <br>
-          <input type="text" name="lastname" v-model="lastname" autocomplete="off" placeholder="Nachname"><br><br>
-          <input type="text" name="firstname" v-model="firstname" autocomplete="off" placeholder="Vorname"><br><br>
+          <input type="text" name="username" v-model="username" autocomplete="off" placeholder="username"><br><br>
           <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
           <input type="password" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
           <input type="password" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
           <br> <div class="error" v-html="error"></div> <br>
-          <button class="button" @click="register">Registrierung abschließen</button>
+          <button class="button" @click="register" type="button">Registrierung abschließen</button>
         </form>
       </section>
     </main>
@@ -24,8 +23,7 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data () {
     return {
-      lastname: '',
-      firstname: '',
+      username: '',
       email: '',
       passwd: '',
       confirm: '',
@@ -36,13 +34,13 @@ export default {
     async register() {
       try {
         await AuthenticationService.register({
-          lastname: this.lastname,
-          firstname: this.firstname,
+          user_name: this.username,
           email: this.email,
           passwd: this.passwd,
           confirm: this.confirm
         });
       } catch(error) {
+          console.log("catching sth");
           this.error = error.response.data.error;
       }
     }
