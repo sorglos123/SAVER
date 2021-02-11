@@ -11,7 +11,7 @@
           <input type="password" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
           <input type="password" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
           <br> <div class="error" v-html="error"></div> <br>
-          <button class="button" @click="register">Registrierung abschließen</button>
+          <button class="button" @click="register" type="button">Registrierung abschließen</button>
         </form>
       </section>
     </main>
@@ -104,6 +104,7 @@ main {
 
 .button {
   background: linear-gradient(to right top, #40916c, #74c69d);
+  background: linear-gradient(to bottom, #bbd2c5, #536976, #292e49); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: none;
   color: white;
   padding: 15px 32px;
@@ -113,6 +114,7 @@ main {
   font-size: 16px;
   font-weight: bolder;
   margin: 4px 2px;
+  margin: 40px 10px;
   cursor: pointer;
 }
 
