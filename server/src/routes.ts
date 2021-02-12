@@ -1,5 +1,6 @@
 const StatusController = require('./controllers/StatusController');
 const AuthenticationController = require('./controllers/AuthenticationController');
+const UpdateController = require('./controllers/UpdateController');
 
 module.exports = (app) => {
     /* Route 0: Status */
@@ -10,4 +11,7 @@ module.exports = (app) => {
 
     /* Route 2: Login */
     app.post('/login', AuthenticationController.login);
+
+    /* Route 3: Update user data */
+    app.post('/updateUser', UpdateController.updateUser);
 }

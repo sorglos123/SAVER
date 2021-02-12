@@ -3,15 +3,36 @@
     <main>
       <section class="glass">
         <div class="header">
-        <br> <h1> Willkommen bei SAVER </h1> <br>
+          <br> <h1 style="text-align:center"> Willkommen bei SAVER </h1> <br>
         </div>
         <div class="board">
-          <div class="infotext">
-            <div>
-              <p> Diese Anwendung dient der Speicherung, Analyse und Verarbeitung von Kassenzetteln, 
-              Rechnungen und anderen Kaufbelegen. Sie wurde von Sascha Richter und Benjamin Krause 
-              im Rahmen des Softwareprojektes im Studiengang Informatik an der BA Leipzig entwickelt. 
+          <div class="info">
+            <div class="text">
+              <!-- Text eventuell auflockern; Schriftart insgesamt verändern -> etwas lockerer, runder! -->
+              <p> SAVER speichert deine Kassenbons, Rechnungen und anderen Kaufbelege und hilft dir über 
+              verschiedene Analysen und Auswertungen dabei, einen Überblick über dein Kaufverhalten zu behalten.
               </p>
+              <p style="font-weight: bold"> Unter dem Strich kannst du mit SAVER also bares Geld sparen. </p> 
+            </div>
+            <div class="pictures">
+              <div class="pic">
+                <img class="fit" src="@/assets/img/vuejs.png" alt="">
+              </div>
+              <div class="pic"> </div>
+              <div class="pic">
+                <img class="fit" src="@/assets/img/nodejs.svg" alt="">
+              </div>
+              <div class="pic"> </div>
+            </div>
+            <div class="pictures">
+              <div class="pic"> </div>
+              <div class="pic">
+                <img class="fit" src="@/assets/img/mariadb.png" alt="">
+              </div>
+              <div class="pic"> </div>
+              <div class="pic">
+                <img class="fit" src="@/assets/img/docker.svg" alt="">
+              </div>
             </div>
           </div>
           <div class="form">
@@ -21,10 +42,12 @@
               <input type="password" v-model="passwd" name="passwd" id="passwd" placeholder="Passwort"><br><br>
               <button class="button" @click="login" type="button">Login</button> <br>
               <br> <div class="error" v-html="error"></div> <br>
-              <br> <p> Sie haben noch kein Benutzerkonto? </p>
+              <br> <p> Noch kein Benutzerkonto? </p>
               <button class="button">
+                <!-- Wird noch anders formatiert, da es ein Router-Link in einem Button ist; das muss noch 
+                angepasst werden -->
                 <router-link to="Register"> Registrieren </router-link>
-              </button> <br>
+              </button>
             </form>
           </div>
         </div>
@@ -94,6 +117,10 @@ main {
   border-radius: 2rem 2rem 0rem 0rem;
   padding: 1rem 3rem;
   color: #1b4332;
+  text-shadow: 5px 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .board {
@@ -103,21 +130,43 @@ main {
   color: #1b4332
 }
 
-.infotext {
+.info {
   flex: 2;
+  margin: 1rem 0rem;
+  padding: 0rem 1rem;
+  color: #1b4332;
+}
+
+.text {
+  flex: 1;
+}
+
+.pictures {
+  flex: 1;
+  padding: 0px 10px 0px 50px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 2rem 0rem;
-  padding: 1rem 3rem;
-  color: #1b4332
+  justify-content: center; 
+}
+
+.pic {
+  padding: 10px 25px 10px 12.5px;
+  height: 100%;
+  width: auto;
+}
+
+.fit {
+  object-fit: scale-down;
+  height: 50px;
 }
 
 .form {
   flex: 2;
   display: flex;
-  margin: 2rem 0rem;
-  padding: 1rem 3rem;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0rem;
+  padding: 0rem 1rem;
   color: #1b4332
 }
 
@@ -143,7 +192,8 @@ main {
 }
 
 .button {
-  background: linear-gradient(to right top, #40916c, #74c69d);;
+  background: linear-gradient(to right top, #40916c, #74c69d);
+  background: linear-gradient(to bottom, #bbd2c5, #536976, #292e49); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: none;
   color: white;
   padding: 15px 32px;
@@ -154,6 +204,11 @@ main {
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
 }
 
 .error {
