@@ -36,9 +36,8 @@ function jwtLogin(user: any) {
 module.exports = {
     register(req, res) {
         /* Konsolen-Ausgaben nur für Testzwecke */
-        console.log('Benutzername: ' + req.body.lastname);
-        console.log('Passwort: ' + req.body.firstname);
-        console.log('Benutzername: ' + req.body.email);
+        console.log('Benutzername: ' + req.body.username);
+        console.log('E-Mail: ' + req.body.email);
         console.log('Passwort: ' + req.body.passwd);
         console.log('Passwort bestätigen: ' + req.body.confirm);
 
@@ -46,14 +45,13 @@ module.exports = {
             ... ob ein vollständiger Datensatz vom Benutzer angegeben wurde und ...
             ... ob Passwort == bestätigtes Passwort; wichtig, BEVOR es in die DB geht! Sowie ...
             ... ob E-Mail-Adresse valide ist (externe Bibliothek) */
-        if ((req.body.lastname != '') && (req.body.firstname != '') && (req.body.email != '') && (req.body.passwd != '') && (req.body.confirm != '')) {
+        if ((req.body.username != '') && (req.body.email != '') && (req.body.passwd != '') && (req.body.confirm != '')) {
             if (req.body.confirm == req.body.passwd) {
                 if (EmailValidator.validate(req.body.email)) {
                     /* Benötigen wir auch eine Passwort-Schema-Validierung für unseren Prototypen? */
 
                     const {
-                        lastname,
-                        firstname,
+                        username,
                         email,
                         passwd,
                         confirm
