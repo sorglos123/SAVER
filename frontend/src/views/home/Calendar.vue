@@ -7,7 +7,7 @@
           <h1> Meine Belege vom {{pickedDate}} </h1>
         </div>
         <div class="window">
-          <p> Hier sollen die Belege aufgelistet werden. </p>
+          <p> Hier sollen die Belege vom {{pickedDate}} aufgelistet werden. </p>
         </div>
       </div>
       <div class="calendarcontainer">
@@ -22,10 +22,10 @@
           <button class="button" @click="updateDate" type="button">Belege anzeigen</button> <br>
         </div>
         <div class="info">
-          <p> Belegsumme </p>
+          <p> Belegsumme ({{pickedDate}}) </p>
           <div>
             <!-- Hier soll die berechnete Belegsumme angezeigt werden. -->
-            <input type="text" v-model="sum" placeholder="belegsumme"> 
+            <input type="text" v-model="sum"> 
           </div>
         </div>
       </div>
