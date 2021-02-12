@@ -3,8 +3,7 @@
     <section class="glass">
       <form>
         <br> <h1> Persönliche Daten ändern </h1> <br>
-        <input type="text" name="lastname" v-model="lastname" autocomplete="off" placeholder="Nachname"><br><br>
-        <input type="text" name="firstname" v-model="firstname" autocomplete="off" placeholder="Vorname"><br><br>
+        <input type="text" name="username" v-model="username" autocomplete="off" placeholder="Benutzername"><br><br>
         <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
         <input type="password" name="oldpw" v-model="passwd" placeholder="Aktuelles Passwort"><br><br>
         <input type="password" name="newpw" v-model="confirm" placeholder="Neues Passwort"><br><br>
@@ -21,11 +20,11 @@
 </template>
 
 <script>
+import UpdateService from '@/services/UpdateService'
 export default {
   data () {
     return {
-      lastname: '',
-      firstname: '',
+      username: '',
       email: '',
       oldpw: '',
       newpw: '',
@@ -34,6 +33,21 @@ export default {
     }
   },
   methods: {
+    async login() {
+      try {
+        await UpdateService.updateUser({
+          username: this.username,
+          email: this.email,
+          oldpw: this.oldpw,
+          newpw: this.newpw,
+          confirm: this.confirm
+        });
+        // this.$store.dispatch('setUser', response.data.user);
+        // this.$store.dispatch('setToken', response.data.token);
+      } catch(error) {
+        this.error = error.response.data.error;
+      }
+    }
   }
 }
 </script>
