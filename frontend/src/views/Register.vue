@@ -4,8 +4,6 @@
       <section class="glass">
         <form>
           <br> <h1> Bitte geben Sie Ihre persönlichen Daten ein! </h1> <br>
-          <input type="text" name="lastname" v-model="lastname" autocomplete="off" placeholder="Nachname"><br><br>
-          <input type="text" name="firstname" v-model="firstname" autocomplete="off" placeholder="Vorname"><br><br>
           <input type="text" name="username" v-model="username" autocomplete="off" placeholder="Benutzername"><br><br>
           <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
           <input type="password" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
@@ -25,8 +23,6 @@ import AuthenticationService from '@/services/AuthenticationService'
 export default {
   data () {
     return {
-      lastname: '',
-      firstname: '',
       username: '',
       email: '',
       passwd: '',
@@ -38,8 +34,6 @@ export default {
     async register() {
       try {
         await AuthenticationService.register({
-          lastname: this.lastname,
-          firstname: this.firstname,
           username: this.username,
           email: this.email,
           passwd: this.passwd,
