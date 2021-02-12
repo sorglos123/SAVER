@@ -18,8 +18,6 @@ class User {
         this.email = email;
     }
 
-
-
     greet() {
         return "Hello, " + this.user_name;
     }
@@ -55,7 +53,6 @@ class User {
             conn = await pool.getConnection();
             const res = await conn.query("SELECT password FROM users WHERE email = ?;", [this.email]);
             if (res.length > 0) {
-                console.log("welcome");
                 console.log(res[0]['password']);
                 console.log(this.password);
                 if(await comparePW(this.password, res[0]['password']))
