@@ -21,6 +21,24 @@ class User {
     greet() {
         return "Hello, " + this.user_name;
     }
+    async getUserID(){
+        var conn;
+        console.log("trying to get userID");
+        try {
+            conn = await pool.getConnection();
+            const res = await conn.query("SELECT user_id FROM users WHERE email = ?;", [this.email]);
+            return console.log(res[0]['user_id']);
+            
+        } catch (error) {
+            console.log(error);
+            throw error; 
+        }
+        finally {
+            console.log("trying to close");
+            conn.end();
+        }
+
+    }
 
     async create() {
 
@@ -32,6 +50,8 @@ class User {
             const res = await conn.query("INSERT INTO users(user_name, password, email) VALUES (?, ?, ?);", [this.user_name, this.password, this.email]);
             console.log("awaiting response");
             console.log(res);
+            const u_id = await conn.query("SELECT LAST_INSERT_ID()");
+            this.user_id = u_id[0]['LAST_INSERT_ID()'];
 
         } catch (err) {
             if (err.errno == 1062) {
@@ -51,12 +71,13 @@ class User {
         var conn;
         try {
             conn = await pool.getConnection();
-            const res = await conn.query("SELECT password FROM users WHERE email = ?;", [this.email]);
+            const res = await conn.query("SELECT password, user_id FROM users WHERE email = ?;", [this.email]);
             if (res.length > 0) {
-                console.log(res[0]['password']);
+                
                 console.log(this.password);
                 if(await comparePW(this.password, res[0]['password']))
-                {
+                {   
+                    this.user_id = res[0]['user_id'];
                     console.log("welcome");
                 }
                 else{
@@ -83,6 +104,7 @@ class User {
     }
     toJSON(){
         return {
+            user_id : this.user_id,
             email : this.email,
             passwd: this.password
 

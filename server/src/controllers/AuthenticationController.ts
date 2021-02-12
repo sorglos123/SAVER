@@ -65,7 +65,7 @@ module.exports = {
                         console.log(error);
                         if (error.errno == 1062) {
                             return res.status(400).send({
-                                error: 'Die E-Mail Adresse existiert bereits'
+                                error: 'Die E-Mail Adresse oder Benutzername existiert bereits'
                             })
                         }
                         else {
@@ -100,13 +100,14 @@ module.exports = {
             if (EmailValidator.validate(req.body.email)) {
                 try {
                     const c = new User("NA", req.body.passwd, req.body.email);
-                    const userJson = c.toJSON();
                     console.log(c.password);
                     await c.login();
+                    const userJson = c.toJSON();
                     return res.status(200).send({
                         message: `Hallo ${req.body.email}, Willkommen zurück!`,
                         user: userJson,
-                        token: jwtLogin(userJson)
+                        token: jwtLogin(userJson),
+                        
                     })
                 } catch (error) {
                     return res.status(403).send({

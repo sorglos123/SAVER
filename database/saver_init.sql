@@ -5,7 +5,8 @@ CREATE TABLE `users` (
   `user_name` varchar(50),
   `password` varchar(255),
   `creation_date` timestamp,
-  `email` varchar(255)
+  `email` varchar(255),
+  UNIQUE (user_name, email)
 );
 
 CREATE TABLE `receipts` (
@@ -53,3 +54,6 @@ ALTER TABLE `volumes` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
 ALTER TABLE `prices` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`);
 
 ALTER TABLE `categories` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`);
+
+
+
