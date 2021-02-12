@@ -55,8 +55,11 @@ module.exports = {
                     try {
                         const c = new User(req.body.user_name, req.body.passwd, req.body.email);
                         await c.create();
+                        const userJson = c.toJSON();
                         return res.status(200).send({
-                            message: `Hallo ${req.body.email}, Ihre Registrierung war erfolgreich!`,
+                            message: `Hallo ${req.body.email}, Ihre Registrierung war erfolgreich!`, 
+                            user: userJson,
+                            token: jwtLogin(userJson)
                         })
                     } catch (error) {
                         console.log(error);
