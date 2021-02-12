@@ -13,9 +13,6 @@
               verschiedene Analysen und Auswertungen dabei, einen Überblick über dein Kaufverhalten zu behalten.
               </p>
               <p style="font-weight: bold"> Unter dem Strich kannst du mit SAVER also bares Geld sparen. </p> 
-              <p> Entwickelt wurde SAVER von Sascha 
-              Richter und Benjamin Krause im Rahmen des Softwareprojektes im Studiengang Informatik an der BA Leipzig. 
-              </p>
             </div>
             <div class="pictures">
               <div class="pic">
@@ -207,6 +204,11 @@ main {
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
 }
 
 .error {
