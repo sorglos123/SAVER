@@ -34,12 +34,13 @@ export default {
     async register() {
       try {
         await AuthenticationService.register({
-          username: this.username,
+          user_name: this.username,
           email: this.email,
           passwd: this.passwd,
           confirm: this.confirm
         });
       } catch(error) {
+          console.log("catching sth");
           this.error = error.response.data.error;
       }
     }

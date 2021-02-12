@@ -15,11 +15,10 @@ app.use(morgan('combine'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-
+app.options('*', cors());
 require('./routes')(app);
 
 const port = config.port;
 app.listen(port, () => {  
     console.log('Listening on port ' + port);
 });
-

@@ -9,12 +9,15 @@
     https://www.youtube.com/watch?v=H6hM_5ilhqw&t=1323s&ab_channel=freeCodeCamp.org (siehe Teil 2 und 3 der Reihe)
 
     In diesem Tutorial wird das so gemacht, dass das Passwort-Hashing im DB-Modell des Users stattfindet. 
-    So wird in der DB nur ein Passwort-Hash gespeichert! */ 
+    So wird in der DB nur ein Passwort-Hash gespeichert! */
 
 import * as EmailValidator from 'email-validator';
 import * as jwt from 'jsonwebtoken';
 
+import { User } from "../dblogic/user";
+
 const config = require('../config/config');
+
 
 /* Helper function: gibt einen sehr langen String-Token zurück, welcher bspw. 
     in Zeile 64 oder 83 vom Backend ans Frontend übergeben werden kann. */
@@ -34,10 +37,10 @@ function jwtLogin(user: any) {
 /* Route 2: /login = ähnlich wie Registrierung bzgl. DB-Logik */
 
 module.exports = {
-    register(req, res) {
+    async register(req, res) {
         /* Konsolen-Ausgaben nur für Testzwecke */
-        console.log('Benutzername: ' + req.body.username);
-        console.log('E-Mail: ' + req.body.email);
+        console.log('Benutzername: ' + req.body.user_name);
+        console.log('Email: ' + req.body.email);
         console.log('Passwort: ' + req.body.passwd);
         console.log('Passwort bestätigen: ' + req.body.confirm);
 
@@ -45,25 +48,33 @@ module.exports = {
             ... ob ein vollständiger Datensatz vom Benutzer angegeben wurde und ...
             ... ob Passwort == bestätigtes Passwort; wichtig, BEVOR es in die DB geht! Sowie ...
             ... ob E-Mail-Adresse valide ist (externe Bibliothek) */
-        if ((req.body.username != '') && (req.body.email != '') && (req.body.passwd != '') && (req.body.confirm != '')) {
+        if ((req.body.user_name != '') && (req.body.email != '') && (req.body.passwd != '') && (req.body.confirm != '')) {
             if (req.body.confirm == req.body.passwd) {
                 if (EmailValidator.validate(req.body.email)) {
                     /* Benötigen wir auch eine Passwort-Schema-Validierung für unseren Prototypen? */
-
-                    const {
-                        username,
-                        email,
-                        passwd,
-                        confirm
-                    } = req.body;
-                    /* <- Hier kommt die Datenbank-Logik 
-                    Bitte beim Beantworten der Anfragen auch den HTTP-Status
-                    (200/400/403/...) entsprechend setzen! -> */
-
-                    return res.status(200).send({
-                        message: `Willkommen ${req.body.email}! Ihre Registrierung war erfolgreich!`
-                        /* Helper function hier verwenden: token: jwtLogin(datenbankuser) */
-                    });
+                    try {
+                        const c = new User(req.body.user_name, req.body.passwd, req.body.email);
+                        await c.create();
+                        const userJson = c.toJSON();
+                        return res.status(200).send({
+                            message: `Hallo ${req.body.email}, Ihre Registrierung war erfolgreich!`, 
+                            user: userJson,
+                            token: jwtLogin(userJson)
+                        })
+                    } catch (error) {
+                        console.log(error);
+                        if (error.errno == 1062) {
+                            return res.status(400).send({
+                                error: 'Die E-Mail Adresse oder Benutzername existiert bereits'
+                            })
+                        }
+                        else {
+                            console.log(error);
+                            return res.status(400).send({
+                                error: 'Irgendwas ist schief gegangen ¯\_(ツ)_/¯'
+                            })
+                        }
+                    }
                 } else {
                     return res.status(400).send({
                         error: 'Bitte geben Sie eine gültige E-Mail-Adresse an.'
@@ -80,26 +91,30 @@ module.exports = {
             });
         }
     },
-    login(req, res) {
+    async login(req, res) {
         /* Konsolen-Ausgaben nur für Testzwecke */
         console.log('Benutzername: ' + req.body.email);
         console.log('Passwort: ' + req.body.passwd);
 
         if ((req.body.email != '') && (req.body.passwd != '')) {
             if (EmailValidator.validate(req.body.email)) {
+                try {
+                    const c = new User("NA", req.body.passwd, req.body.email);
+                    console.log(c.password);
+                    await c.login();
+                    const userJson = c.toJSON();
+                    return res.status(200).send({
+                        message: `Hallo ${req.body.email}, Willkommen zurück!`,
+                        user: userJson,
+                        token: jwtLogin(userJson),
+                        
+                    })
+                } catch (error) {
+                    return res.status(403).send({
+                        error: 'Falscher Login und/oder Passwort'
+                    })
+                }
 
-                const {
-                    email,
-                    passwd
-                } = req.body;
-                /* <- Hier kommt die Datenbank-Logik 
-                    Bitte beim Beantworten der Anfragen auch den HTTP-Status
-                    (200/400) entsprechend setzen! -> */
-
-                return res.status(200).send({
-                    message: `Hallo ${req.body.email}, Ihr Login war erfolgreich!`,
-                    /* Helper function hier verwenden: token: jwtLogin(datenbankuser) */
-                });
             } else {
                 return res.status(400).send({
                     error: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.'
