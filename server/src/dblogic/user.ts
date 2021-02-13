@@ -110,13 +110,6 @@ class User {
 
         }
     }
-    hashPassword(password: string){
-        const SALT_FACTOR = 8; 
-        
-         bcrypt.genSaltAsync(SALT_FACTOR).then(salt => bcrypt.hashAsync(password, salt, null)).then(hash => this.password = hash);
-         return this.password; 
-         
-    }
 
 }
 function hashPW(u: User){
@@ -126,6 +119,39 @@ function hashPW(u: User){
 
 function comparePW(password: string, hash:string){
     return bcrypt.compareAsync(password, hash);
+}
+
+async function updateUser(curPW: string, newPW: string, newEmail: string, newUsername: string , uid: number, option: number){
+    var conn;
+    let newPW1 = newPW;
+    //utilizing option input as switch case use like this:
+    // 0: update PW
+    // 1: update email
+    // 2: update user name
+    // further update possibilites;?? => Maybe use seperate functions.. 
+    switch (option) {
+        case 0:
+            try {
+                conn = await pool.getConnection();
+                  /* tslint:disable:no-unused-variable */
+                const res = await conn.query("UPDATE users SET password = ? WHERE user_id = ?"),[newPW1, uid]; 
+            } catch (error) {
+                
+            }
+            
+            break;
+
+        case 1:
+
+            break;
+
+        case 2:
+
+            break;
+    
+        default:
+            break;
+    }
 }
 
 export { User }; 
