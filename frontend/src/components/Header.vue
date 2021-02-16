@@ -55,7 +55,7 @@ button a {
     margin: 0 auto;
     background: #1b4332;
     color: white;
-    width: 100%;
+    width: auto;
     height: 80px;
     display: flex;
 }

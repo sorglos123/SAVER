@@ -18,16 +18,16 @@
                     </router-link>
                 </button>
                 <button class="button">
-                    <router-link to="/statistics" active-class="active" tag="button"> 
+                    <router-link to="/calendar" active-class="active" tag="button"> 
                         <div class="link-container">
-                            Meine Statistiken
+                            Mein Kalender
                         </div> 
                     </router-link>
                 </button>
                 <button class="button">
-                    <router-link to="/calendar" active-class="active" tag="button"> 
+                    <router-link to="/statistics" active-class="active" tag="button"> 
                         <div class="link-container">
-                            Mein Kalender
+                            Meine Statistiken
                         </div> 
                     </router-link>
                 </button>
@@ -63,12 +63,17 @@ button a {
 }
 
 .bar {
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
     background: #1b4332;
     color: white;
     width: 100%;
+    width: 8px;
     height: auto;
+    height: 100%;
     display: flex;
+    position: fixed;
+    overflow: auto;
 }
 
 .button {
@@ -87,5 +92,27 @@ button a {
 
 .button:hover {
     background: #081c15;
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+    width: 30px;
+    height: auto;
+    position: relative;
+    }
+
+    .button {
+    background: #1b4332;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 8px;
+    font-weight: bolder;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 }
 </style>
