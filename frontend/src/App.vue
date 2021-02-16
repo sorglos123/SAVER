@@ -1,12 +1,8 @@
 <template>
   <page-header />
-  <!-- <div id="app">
-  </div> -->
+  <div id="app">
     <router-view/>
-  <!-- <div id="nav">
-    <router-link to="/register">Register</router-link> |
-    <router-link to="/login">Login</router-link>
-  </div> -->
+  </div>
 </template>
 
 <script>
