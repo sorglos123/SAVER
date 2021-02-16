@@ -1,0 +1,163 @@
+<template>
+    <div class="main">
+      <section class="glass">
+        <div class="form">
+          <input type="file" @change="preview" id="receipt" name="receipt" accept="image/png, image/jpeg, .pdf">
+            <button class="button" type="button" @click="displayProperties"> Beleg hochladen </button> <br>
+            <br> <div class="error" v-html="error"></div> <br>
+            <label for="receipt_date"> Belegdatum: </label>
+            <input type="text" v-model="date" name="receipt_date" id="receipt_date" placeholder="Belegdatum"><br><br>
+            <label for="receipt_store"> Verkaufsstelle: </label>
+            <input type="text" v-model="store" name="receipt_store" id="receipt_store" placeholder="Verkaufsstelle"><br><br>
+            <label for="receipt_value"> Belegsumme: </label>
+            <input type="text" v-model="value" name="receipt_value" id="receipt_value" placeholder="Belegsumme"><br><br>
+        </div>
+        <div class="preview" id="preview">
+          <img class="fit" v-if="url" :src="url" />
+        </div>
+      </section>
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+      <div class="circle3"></div>
+      <div class="circle4"></div>
+    </div>
+</template>
+
+<script>
+
+export default {
+  data () {
+    return {
+      url: null,
+      date: '',
+      store: '',
+      value: '',
+      error: null
+    }
+  },
+  methods: {
+    preview(e) {
+      const file = e.target.files[0];
+      this.url = URL.createObjectURL(file);
+    },
+    displayProperties() {
+      console.log(this.date);
+      console.log(this.store);
+      console.log(this.value);
+    }
+  }
+}
+
+</script>
+
+
+<style scoped>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main {
+  min-height: 85vh;
+  height: auto;
+  background: linear-gradient(to right top, #40916c, #74c69d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
+}
+
+.glass {
+  min-height: 65vh;
+  min-width: 80vh;
+  width: 60%;
+  background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+  border-radius: 2rem;
+  z-index: 3;
+  backdrop-filter: blur(2rem);
+  color: #1b4332;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview {
+  flex: 2;
+  height: 60vh;
+  width: auto;
+}
+
+.form {
+  flex: 1;
+}
+
+.fit {
+  object-fit: fill; /* image is resized to fill the given dimension. If necessary, the image will be stretched or squished to fit */
+  /* object-fit: contain; /* image keeps its aspect ratio, but is resized to fit within the given dimension */
+  /* object-fit: cover; /*   image keeps its aspect ratio and fills the given dimension. The image will be clipped to fit */ 
+  /* object-fit: scale-down; /* the image is scaled down to the smallest version of none or contain */
+  height: 100%;
+  width: auto;
+}
+
+.circle1, .circle2, .circle3, .circle4 {
+  background: white;
+  background: linear-gradient(to right top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle1 {
+  width: 15rem;
+  height: 15rem;
+  bottom: 3%;
+  left: 45%;
+  z-index: 2;
+}
+
+.circle2 {
+  width: 22rem;
+  height: 22rem;
+  top: 17%;
+  right: 5%;
+  z-index: 2;
+}
+
+.circle3 {
+  width: 20rem;
+  height: 20rem;
+  top: 22%;
+  left: 19%;
+  z-index: 2;
+}
+
+.button {
+  background: linear-gradient(to right top, #40916c, #74c69d);
+  background: linear-gradient(to bottom, #bbd2c5, #536976, #292e49); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bolder;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+.error {
+  border-color: red;
+  color: red;
+  z-index: 3;
+}
+
+</style>
