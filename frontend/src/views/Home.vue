@@ -4,8 +4,6 @@
     <div class="content">
       <router-view/>
     </div>
-    <!-- <div class="circle1"></div>
-    <div class="circle2"></div> -->
   </div>
 </template>
 
@@ -41,6 +39,7 @@ export default {
 .content {
   border-radius: 20px;
   margin: 6px 6px 6px 0px;
+  margin-left: 8px; /* Sollte dieselbe Größe haben wie die width der .bar in Sidebar.vue */
   background: linear-gradient(to right top, #40916c, #74c69d);
 }
 
@@ -66,7 +65,7 @@ export default {
 }
 
 .button {
-  background: linear-gradient(to right top, #40916c, #74c69d);;
+  /* background: linear-gradient(to right top, #40916c, #74c69d); */
   border: none;
   color: white;
   padding: 15px 32px;
@@ -83,6 +82,12 @@ export default {
   border-color: red;
   color: red;
   z-index: 3;
+}
+
+@media screen and (max-width: 700px) {
+  div.content {
+    margin-left: 0;
+  }
 }
 
 </style>

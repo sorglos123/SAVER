@@ -19,7 +19,7 @@ const routes = [{
         path: '/home',
         name: 'home',
         component: () =>
-            import ('../views/home/Home.vue'),
+            import ('../views/Home.vue'),
         children: [{
                 path: '/dashboard',
                 component: () =>
@@ -29,6 +29,11 @@ const routes = [{
                 path: '/receipts',
                 component: () =>
                     import ('../views/home/Receipts.vue')
+            },
+            {
+                path: '/upload',
+                component: () =>
+                    import ('../views/home/Upload.vue')
             },
             {
                 path: '/statistics',
