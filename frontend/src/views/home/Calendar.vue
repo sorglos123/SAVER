@@ -149,7 +149,6 @@ export default {
 }
 
 .window {
-  border: 1px solid black;
   height: 85%;
   width: auto;
   background: white;
@@ -189,12 +188,6 @@ export default {
   z-index: 2;
 }
 
-button a {
-    color: #081c15;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
 .button {
   background: linear-gradient(to bottom, #bbd2c5, #536976, #292e49); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: none;
@@ -203,11 +196,16 @@ button a {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bolder;
   margin: 4px 2px;
   margin: 40px 10px;
   cursor: pointer;
+}
+
+button a {
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 .error {
