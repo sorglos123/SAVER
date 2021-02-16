@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="main">
     <main>
       <section class="glass">
         <div class="header">
@@ -44,8 +44,6 @@
               <br> <div class="error" v-html="error"></div> <br>
               <br> <p> Noch kein Benutzerkonto? </p>
               <button class="button">
-                <!-- Wird noch anders formatiert, da es ein Router-Link in einem Button ist; das muss noch 
-                angepasst werden -->
                 <router-link to="Register"> Registrieren </router-link>
               </button>
             </form>

@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="main">
     <section class="glass">
       <form>
         <br> <h1> Persönliche Daten ändern </h1> <br>
@@ -61,7 +61,7 @@ export default {
   box-sizing: border-box;
 }
 
-.hello {
+.main {
   min-height: 85vh;
   height: auto;
   background: linear-gradient(to right top, #40916c, #74c69d);
