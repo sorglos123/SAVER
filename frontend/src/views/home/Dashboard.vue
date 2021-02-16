@@ -228,4 +228,21 @@ button a {
   z-index: 3;
 }
 
+@media screen and (max-width: 700px) {
+  .glass {
+    height: 150px;
+    width: 100px;
+    background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    border-radius: 2rem;
+    z-index: 3;
+    backdrop-filter: blur(2rem);
+    color: #1b4332;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    margin-top: 100px;
+}
+}
+
 </style>
