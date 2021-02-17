@@ -108,7 +108,6 @@ class User {
         return {
             user_id: this.user_id,
             email: this.email,
-            passwd: this.password
 
         }
     }
