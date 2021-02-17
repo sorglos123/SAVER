@@ -3,6 +3,12 @@
         <div class="sidebar">
             <div class="title"> </div>
             <div class="menu-items">
+                <button class="button" @click="navigateTo('/dashboard')" type="button"> Home </button>
+                <button class="button" @click="navigateTo('/receipts')" type="button"> Meine Belege </button>
+                <button class="button" @click="navigateTo('/calendar')" type="button"> Mein Kalender </button>
+                <button class="button" @click="navigateTo('/statistics')" type="button"> Meine Statistiken </button>
+                <button class="button" @click="navigateTo('/user')" type="button"> Meine Benutzerdaten </button>
+                <!-- 
                 <button class="button">
                     <router-link to="/dashboard" active-class="active" tag="button"> 
                         <div class="link-container">
@@ -37,7 +43,7 @@
                             Meine Benutzerdaten
                         </div> 
                     </router-link>
-                </button>
+                </button> -->
             </div>
         </div>
     </main>
@@ -45,7 +51,11 @@
 
 <script>
 export default {
-
+    methods: {
+        navigateTo(route) {
+            this.$router.push(route);
+        },
+    }
 }
 </script>
 
@@ -88,6 +98,7 @@ button a {
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 .button:hover {

@@ -2,32 +2,18 @@
     <main>
         <div class="bar">
             <div class="title">
-                <h1 style="vertical-align:middle"> SAVER </h1>
+                <h1> SAVER </h1>
                 <!-- <button class="button"> -->
                     <!-- Falls User nicht eingeloggt: Weiterleitung zum Login -->
                     <!-- Falls User eingeloggt: Weiterleitung zu Home -->
                     <!-- <router-link to="/"> <h1> SAVER </h1> </router-link> -->
                 <!-- </button> -->
-                <button class="button">
-                    <router-link to="/user"> [benutzername] </router-link>
-                </button>
             </div>
             <!-- TODO: Zeige die Buttons Login/Registrierung nur an, wenn der Benutzer nicht eingeloggt ist -> Store -->
             <div class="buttons">
-                <button class="button">
-                    <!-- Siehe oben: Weiterleitung zu Home soll über SAVER-Button erfolgen -->
-                    <router-link to="/dashboard"> HOME </router-link>
-                </button>
-                <button class="button">
-                    <router-link to="/"> Login </router-link>
-                </button>
-                <button class="button">
-                    <router-link to="Register"> Registrierung </router-link>
-                </button>
-                <!-- Diesen Button nur zeigen, wenn man sich eingeloggt hat! -->
-                <button class="button">
-                    <router-link to="/"> Logout </router-link>
-                </button>
+                <button class="button" @click="navigateTo({name: 'login'})" type="button" v-if="!$store.state.isUserLoggedIn"> Login </button>
+                <button class="button" @click="navigateTo({name: 'register'})" type="button" v-if="!$store.state.isUserLoggedIn"> Registrierung </button>
+                <button class="button" @click="logout" type="button" v-if="$store.state.isUserLoggedIn"> Logout </button>
             </div>
         </div>
     </main>
@@ -35,7 +21,16 @@
 
 <script>
 export default {
-
+    methods: {
+        navigateTo(route) {
+            this.$router.push(route);
+        },
+        logout() {
+            this.$store.dispatch('setToken', null);
+            this.$store.dispatch('setUser', null);
+            this.$router.push({name: 'login'});
+        }
+    }
 }
 </script>
 
@@ -68,7 +63,7 @@ button a {
 }
 
 .buttons {
-    flex: 3;
+    flex: 6;
     display: flex;
     align-items: right;
     justify-content: flex-end;
@@ -87,6 +82,7 @@ button a {
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 .button:hover {

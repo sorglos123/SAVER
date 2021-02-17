@@ -7,27 +7,12 @@
                         </div>
                     </div>
                     <div class="link">
-                        <button class="button">
+                      <button class="button" @click="navigateTo('/receipts')" type="button"> Meine Belege </button>
+                      <!-- <button class="button">
                             <router-link to="/receipts"> Meine Belege </router-link>
-                        </button>
+                        </button> -->
                         <div class="text"> 
                             <p> Übersicht über meine hochgeladenen Belege </p>
-                        </div>
-                    </div> 
-                </div>
-        </div>
-        <div class="glass">
-                <div class="card">
-                    <div class="icon"> 
-                        <div class="fill2"> 
-                        </div>
-                    </div>
-                    <div class="link">
-                        <button class="button">
-                            <router-link to="/statistics"> Meine Statistiken </router-link>
-                        </button>
-                        <div class="text"> 
-                            <p> Aufbereitung meiner Belegdaten </p>
                         </div>
                     </div> 
                 </div>
@@ -39,9 +24,10 @@
                         </div>
                     </div>
                     <div class="link">
-                        <button class="button">
+                      <button class="button" @click="navigateTo('/calendar')" type="button"> Mein Kalender </button>
+                      <!-- <button class="button">
                             <router-link to="/calendar"> Mein Kalender </router-link>
-                        </button>
+                        </button> -->
                         <div class="text"> 
                             <p> Kalendarische Übersicht </p>
                         </div>
@@ -52,13 +38,31 @@
         <div class="glass">
                 <div class="card">
                     <div class="icon"> 
+                        <div class="fill2"> 
+                        </div>
+                    </div>
+                    <div class="link">
+                      <button class="button" @click="navigateTo('/statistics')" type="button"> Meine Statistiken </button>
+                      <!-- <button class="button">
+                            <router-link to="/statistics"> Meine Statistiken </router-link>
+                        </button> -->
+                        <div class="text"> 
+                            <p> Aufbereitung meiner Belegdaten </p>
+                        </div>
+                    </div> 
+                </div>
+        </div>
+        <div class="glass">
+                <div class="card">
+                    <div class="icon"> 
                         <div class="fill4"> 
                         </div>
                     </div>
                     <div class="link">
-                        <button class="button">
+                      <button class="button" @click="navigateTo('/user')" type="button"> Meine Benutzerdaten </button>
+                      <!-- <button class="button">
                             <router-link to="/user"> Meine Benutzerdaten </router-link>
-                        </button>
+                        </button> -->
                         <div class="text"> 
                             <p> Änderung meiner persönlichen Daten </p>
                         </div>
@@ -73,7 +77,13 @@
 </template>
 
 <script>
-
+export default {
+    methods: {
+        navigateTo(route) {
+            this.$router.push(route);
+        },
+    }
+}
 </script>
 
 
@@ -202,7 +212,6 @@
 button a {
     color: #081c15;
     text-decoration: none;
-    text-transform: uppercase;
 }
 
 .button {
@@ -216,10 +225,6 @@ button a {
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
-}
-
-.button:hover {
-    color: white;
 }
 
 .error {

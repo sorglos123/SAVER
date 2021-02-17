@@ -3,9 +3,10 @@
       <section class="glass">
         <div class="upper">
           <div class="upload">
-            <button class="button">
+            <button class="button" @click="navigateTo('/upload')" type="button"> Neuen Beleg hochladen </button>
+            <!-- <button class="button">
               <router-link to="/upload"> Neuen Beleg hochladen </router-link>
-            </button>
+            </button> -->
           </div>
           <div class="header">
               <h1> Meine Belegübersicht </h1>
@@ -75,6 +76,9 @@ export default {
     }
   },
   methods: {
+    navigateTo(route) {
+      this.$router.push(route);
+    },
     displayFile() {
       this.selectedFile = document.getElementById('receipt').files[0];
       console.log(this.selectedFile);
