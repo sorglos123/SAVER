@@ -43,9 +43,7 @@
               <button class="button" @click="login" type="button">Login</button> <br>
               <br> <div class="error" v-html="error"></div> <br>
               <br> <p> Noch kein Benutzerkonto? </p>
-              <button class="button">
-                <router-link to="Register"> Registrieren </router-link>
-              </button>
+              <button class="button" @click="navigateTo({name: 'register'})" type="button"> Registrierung </button>
             </form>
           </div>
         </div>
@@ -69,16 +67,20 @@ export default {
   methods: {
     async login() {
       try {
-        await AuthenticationService.login({
+        const response = await AuthenticationService.login({
           email: this.email,
           passwd: this.passwd,
         });
-        // this.$store.dispatch('setUser', response.data.user);
-        // this.$store.dispatch('setToken', response.data.token);
+        this.$store.dispatch('setToken', response.data.token);
+        this.$store.dispatch('setUser', response.data.user);
+        this.$router.push('/dashboard');
       } catch(error) {
         this.error = error.response.data.error;
       }
-    }
+    },
+    navigateTo(route) {
+      this.$router.push(route);
+    },
   }
 }
 </script>

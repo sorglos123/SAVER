@@ -33,14 +33,15 @@ export default {
   methods: {
     async register() {
       try {
-        await AuthenticationService.register({
+        const response = await AuthenticationService.register({
           user_name: this.username,
           email: this.email,
           passwd: this.passwd,
           confirm: this.confirm
         });
+        this.$store.dispatch('setToken', response.data.token);
+        this.$store.dispatch('setUser', response.data.user);
       } catch(error) {
-          console.log("catching sth");
           this.error = error.response.data.error;
       }
     }
