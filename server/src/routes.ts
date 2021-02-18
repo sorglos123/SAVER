@@ -19,4 +19,7 @@ module.exports = (app) => {
     /* Route 4: Get a receipt for a specific date */
     app.post('/calendar', ReceiptController.getReceipt);
 
+    /* Route 5: Get a calendar dates for a specific date */
+    app.post('/updatecalender', ReceiptController.getDates);
+
 }
