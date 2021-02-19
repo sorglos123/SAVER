@@ -1,12 +1,8 @@
 <template>
+  <page-header />
   <div id="app">
-    <page-header />
-  </div>
     <router-view/>
-  <!-- <div id="nav">
-    <router-link to="/register">Register</router-link> |
-    <router-link to="/login">Login</router-link>
-  </div> -->
+  </div>
 </template>
 
 <script>
@@ -43,7 +39,6 @@ export default {
 }
 
 body {
-  /* background: #395B50; */
-  background: linear-gradient(to right top, #40916c, #74c69d);
+  background: #1b4332;
 }
 </style>

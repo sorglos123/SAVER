@@ -1,32 +1,32 @@
-// import Vue from 'vue';
-// import Vuex from 'vuex';
-import {createStore} from 'vuex';
+import Vuex from 'vuex';
 
-const store = createStore({
-    strict: true,
+export default new Vuex.Store({
+    strict: true, // Store kann nur durch eine action oder mutation verändert werden
     state: {
         name: 'Vue',
-        user: null,
-        token: null
+        userID: null,
+        token: null,
+        isUserLoggedIn: false
     },
-    mutations: {
-        setUser (state, user) {
-            state.user = user;
+    mutations: { // Definition der Operationen
+        setUserID(state, user) {
+            state.userID = user.user_id;
         },
-        setToken (state, token) {
+        setToken(state, token) {
             state.token = token;
+            if (token) {
+                state.isUserLoggedIn = true;
+            } else {
+                state.isUserLoggedIn = false;
+            }
         }
     },
-    actions: {
-        setUser ({commit}, user) {
-            commit('setUser', user)
+    actions: { // actions: "Ort" für asynchrone Operationen
+        setUserID({ commit }, user) {
+            commit('setUserID', user)
         },
-        setToken ({commit}, token) {
+        setToken({ commit }, token) {
             commit('setToken', token)
         }
     }
-});
-
-export default store;
-
-// Vue.use(Vuex);
+})

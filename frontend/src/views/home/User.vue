@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="main">
     <section class="glass">
       <form>
         <br> <h1> Persönliche Daten ändern </h1> <br>
@@ -9,7 +9,7 @@
         <input type="password" name="newpw" v-model="confirm" placeholder="Neues Passwort"><br><br>
         <input type="password" name="confirm" v-model="confirm" placeholder="Neues Passwort bestätigen"><br><br>
         <br> <div class="error" v-html="error"></div> <br>
-        <button class="button" @click="updateUser">Abschicken</button>
+        <button class="button" @click="update()">Abschicken</button>
       </form>
     </section>
     <div class="circle1"></div>
@@ -29,21 +29,26 @@ export default {
       oldpw: '',
       newpw: '',
       confirm: '',
+      userID: '',
       error: null
     }
   },
   methods: {
-    async login() {
+    async update() {
       try {
-        await UpdateService.updateUser({
+        const response = await UpdateService.updateUser({
           username: this.username,
           email: this.email,
           oldpw: this.oldpw,
           newpw: this.newpw,
-          confirm: this.confirm
+          confirm: this.confirm,
+          uid: this.$store.state.userID
         });
-        // this.$store.dispatch('setUser', response.data.user);
-        // this.$store.dispatch('setToken', response.data.token);
+        console.log(response);
+        // Hier positive Nachricht ausgeben:
+        // if(response) {
+        // this.error = 'Ihre Benutzerdaten wurden erfolgreich geändert.';
+        // }
       } catch(error) {
         this.error = error.response.data.error;
       }
@@ -61,7 +66,7 @@ export default {
   box-sizing: border-box;
 }
 
-.hello {
+.main {
   min-height: 85vh;
   height: auto;
   background: linear-gradient(to right top, #40916c, #74c69d);
