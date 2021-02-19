@@ -42,7 +42,7 @@ export default {
           oldpw: this.oldpw,
           newpw: this.newpw,
           confirm: this.confirm,
-          userID: this.$store.state.userID
+          uid: this.$store.state.userID
         });
         console.log(response);
         // Hier positive Nachricht ausgeben:
