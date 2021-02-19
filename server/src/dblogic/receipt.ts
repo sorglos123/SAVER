@@ -20,7 +20,7 @@ export class Item {
 
 export async function getDates(uid: number) {
     var conn;
-    console.log("gettign dates");
+    console.log("getting dates");
     try {
         conn = await pool.getConnection();
         const res = await conn.query("SELECT receipt_date from receipts WHERE user_id = ?;", [uid]);
@@ -43,7 +43,6 @@ export async function getDates(uid: number) {
 
     export async function getReceipts(uid: number, date: string) {
         var conn;
-        let items: Array<Array<Item>>;
 
         console.log("trying to get receipts");
         try {
