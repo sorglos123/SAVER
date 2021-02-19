@@ -72,7 +72,7 @@ export default {
           passwd: this.passwd,
         });
         this.$store.dispatch('setToken', response.data.token);
-        this.$store.dispatch('setUser', response.data.user);
+        this.$store.dispatch('setUserID', response.data.user);
         this.$router.push('/dashboard');
       } catch(error) {
         this.error = error.response.data.error;
