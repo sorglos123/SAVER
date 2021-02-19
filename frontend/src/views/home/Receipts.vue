@@ -44,6 +44,7 @@
               <button class="button" @click="sortList()">Belege sortieren</button> <br>
             </div>
           </div>
+          <button class="button" @click="getList()">Belege anzeigen</button> <br>
         </div>
         <div class="window">
           <!-- Dieses div reagiert aktuell auf den File-Upload! Allerdings soll es ja auf die Filterung/
@@ -64,6 +65,7 @@
 </template>
 
 <script>
+import ListService from '@/services/ListService'
 export default {
   data () {
     return {
@@ -82,6 +84,25 @@ export default {
     displayFile() {
       this.selectedFile = document.getElementById('receipt').files[0];
       console.log(this.selectedFile);
+    },
+    async getList() {
+      console.log(this.$store.state.userID);
+      try {
+        const response = await ListService.queryList({
+          uid: this.$store.state.userID
+        });
+        console.log(response);
+        // return response;
+      } catch(error) {
+        this.error = error.response.data.error;
+      }
+    },
+    async showReceipts() {
+      // Anzeigen der Belege im Frontend
+      // const receiptList = await getList();
+      // return receiptList;
+      // Danach im <div> mit For-Schleife durch receiptList durchgehen und Einträge aus Verkaufsstelle und
+      // Belegsumme zusammensetzen
     },
     filterList() {
       if(this.filter_criterion === 'Verkaufsstelle') {

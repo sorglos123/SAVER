@@ -19,7 +19,7 @@
             :inputFormat="inputFormat"
           >
           </datepicker>
-          <button class="button" @click="updateDate" type="button">Belege anzeigen</button> <br>
+          <button class="button" @click="updateDate(); getList()" type="button">Belege anzeigen</button> <br>
         </div>
         <div class="info">
           <p> Belegsumme ({{pickedDate}}) </p>
@@ -41,6 +41,7 @@
 import Datepicker from "vue3-datepicker";
 import { ref } from 'vue';
 import { de } from 'date-fns/locale';
+import ListService from '@/services/ListService'
 
 export default {
   name: 'Calendar',
@@ -60,8 +61,10 @@ export default {
   },
   data () {
     return {
-      pickedDate: this.format(new Date()),
+      // pickedDate: this.format(new Date()),
+      pickedDate: new Date(),
       sum: 0,
+      error: null
     }
   },
   methods: {
@@ -73,12 +76,33 @@ export default {
       return tmp;
     },
     /* 3 Teilschritte beim Betätigen des Abschicken-Buttons:
-      - Anpassung des Headers (format()-Methode)
-      - Abruf der Belege aus der Datenbank & Anzeigen in Listenform (showReceipts()-Methode)
+      - Anpassung des Headers (format() & updateDate())
+      - Abruf der Belege aus der Datenbank & Anzeigen in Listenform (getList() & showReceipts())
       - Ausrechnen der Belegsumme & Darstellung im Fenster rechts unten  */
     updateDate() {
       this.pickedDate = this.format(this.picked);
-    }
+    },
+    async getList() {
+      console.log(this.picked);
+      console.log(this.$store.state.userID);
+      try {
+        const response = await ListService.queryList({
+          date: this.pickedDate,
+          uid: this.$store.state.userID
+        });
+        console.log(response);
+        // return response;
+      } catch(error) {
+        this.error = error.response.data.error;
+      }
+    },
+    async showReceipts() {
+      // Anzeigen der Belege im Frontend
+      // const receiptList = await getList();
+      // return receiptList;
+      // Danach im <div> mit For-Schleife durch receiptList durchgehen und Einträge aus Verkaufsstelle und
+      // Belegsumme zusammensetzen
+    },
   },
 }
 
