@@ -16,6 +16,7 @@ COPY . .
 #build
 
 RUN npm run build
+RUN npm run lint
 
 
 #Gets executed when starting the container

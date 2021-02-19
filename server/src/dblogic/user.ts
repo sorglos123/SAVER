@@ -3,7 +3,7 @@ import * as prmise from "bluebird";
 
 const bcrypt = prmise.promisifyAll(require("bcrypt-nodejs"));
 
-const pool = mariadb.createPool({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: 'saver', connectionLimit: 5 });
+const pool = mariadb.createPool({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: process.env.DB, connectionLimit: 5 });
 
 class User {
     user_id: number;
@@ -12,26 +12,27 @@ class User {
     email: string;
     creation_date: Date;
 
-    constructor(user_name: string, password: string, email: string) {
+    constructor(user_name: string, password: string, email: string, uid?: number) {
         this.user_name = user_name;
-        this.password = password; 
+        this.password = password;
         this.email = email;
+        this.user_id = uid;
     }
 
     greet() {
         return "Hello, " + this.user_name;
     }
-    async getUserID(){
+    async getUserID() {
         var conn;
         console.log("trying to get userID");
         try {
             conn = await pool.getConnection();
             const res = await conn.query("SELECT user_id FROM users WHERE email = ?;", [this.email]);
             return console.log(res[0]['user_id']);
-            
+
         } catch (error) {
             console.log(error);
-            throw error; 
+            throw error;
         }
         finally {
             console.log("trying to close");
@@ -46,7 +47,7 @@ class User {
         var conn;
         try {
             conn = await pool.getConnection();
-            
+
             const res = await conn.query("INSERT INTO users(user_name, password, email) VALUES (?, ?, ?);", [this.user_name, this.password, this.email]);
             console.log("awaiting response");
             console.log(res);
@@ -73,18 +74,17 @@ class User {
             conn = await pool.getConnection();
             const res = await conn.query("SELECT password, user_id FROM users WHERE email = ?;", [this.email]);
             if (res.length > 0) {
-                
+
                 console.log(this.password);
-                if(await comparePW(this.password, res[0]['password']))
-                {   
+                if (await comparePW(this.password, res[0]['password'])) {
                     this.user_id = res[0]['user_id'];
                     console.log("welcome");
                 }
-                else{
+                else {
                     console.log("incorrect");
                     throw new Error("Incorrect User/PW");
                 }
-               
+
             } else {
                 console.log("incorrect");
                 throw new Error("Incorrect User/PW");
@@ -99,33 +99,123 @@ class User {
         }
         finally {
             console.log("trying to close");
-            conn.end();
+            if (conn != null){
+                conn.end();
+            }
         }
     }
-    toJSON(){
+    toJSON() {
         return {
-            user_id : this.user_id,
-            email : this.email,
-            passwd: this.password
+            user_id: this.user_id,
+            email: this.email,
 
         }
     }
-    hashPassword(password: string){
-        const SALT_FACTOR = 8; 
-        
-         bcrypt.genSaltAsync(SALT_FACTOR).then(salt => bcrypt.hashAsync(password, salt, null)).then(hash => this.password = hash);
-         return this.password; 
-         
+    async updateUserPW(newPW: string) {
+        var conn;
+        try {
+            await this.checkUserPW();
+            this.password = newPW;
+            await hashPW(this);
+            conn = await pool.getConnection();
+            const res = await conn.query("UPDATE users SET password = ? WHERE user_id = ?;", [this.password, this.user_id]);
+        } catch (error) {
+            console.log(error);
+            console.log("error aus update user");
+            throw error;
+        }
+        finally {
+            console.log("trying to close");
+            if (conn != null) {
+                conn.end();
+            }
+        }
+    }
+
+    async updateEmail() {
+        var conn;
+        try {
+            await this.checkUserPW();
+            conn = await pool.getConnection();
+            const res = await conn.query("UPDATE users SET email = ? WHERE user_id = ?;", [this.email, this.user_id]);
+        } catch (error) {
+            console.log(error);
+            console.log("error aus update Email");
+            throw error;
+        }
+        finally {
+            console.log("trying to close");
+            if (conn != null) {
+                conn.end();
+            }
+        }
+
+    }
+
+    async updateUserName() {
+        var conn;
+        try {
+            await this.checkUserPW();
+            conn = await pool.getConnection();
+            const res = await conn.query("UPDATE users SET user_name = ? WHERE user_id = ?;", [this.user_name, this.user_id]);
+        } catch (error) {
+            console.log(error);
+            console.log("error aus update User Name");
+            throw error;
+        }
+        finally {
+            console.log("trying to close");
+            if (conn != null) {
+                conn.end();
+            }
+        }
+
+    }
+
+    async checkUserPW() {
+        var conn;
+        console.log("trying to check user PW");
+        console.log(this.user_id);
+        console.log(this.password);
+        try {
+            conn = await pool.getConnection();
+            const res = await conn.query("SELECT password FROM users WHERE user_id = ?;", [this.user_id]);
+            console.log(res[0]['password']);
+            if (res.length > 0) {
+
+                console.log(this.password);
+                if (await comparePW(this.password, res[0]['password'])) {
+                    console.log("welcome");
+                }
+                else {
+                    console.log("incorrect");
+                    throw new Error("Incorrect User/PW");
+                }
+
+            }
+        } catch (error) {
+            console.log("Catching another error");
+            console.log(error)
+            throw error;
+        }
+        finally {
+            console.log("trying to close");
+            if (conn != null) {
+                conn.end();
+            }
+        }
+
     }
 
 }
-function hashPW(u: User){
-    const SALT_FACTOR = 8; 
+function hashPW(u: User) {
+    const SALT_FACTOR = 8;
     bcrypt.genSaltAsync(SALT_FACTOR).then(salt => bcrypt.hashAsync(u.password, salt, null)).then(hash => u.password = hash);
 }
 
-function comparePW(password: string, hash:string){
+function comparePW(password: string, hash: string) {
     return bcrypt.compareAsync(password, hash);
 }
+
 
 export { User }; 
