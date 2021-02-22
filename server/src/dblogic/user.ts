@@ -3,7 +3,7 @@ import * as prmise from "bluebird";
 
 const bcrypt = prmise.promisifyAll(require("bcrypt-nodejs"));
 
-const pool = mariadb.createPool({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: process.env.DB, connectionLimit: 5 });
+const pool = mariadb.createPool({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: process.env.DB, connectionLimit: 10 });
 
 class User {
     user_id: number;
