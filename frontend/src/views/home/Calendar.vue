@@ -4,7 +4,7 @@
       <div class="data">
         <div class="header">
           <!-- Ausgabe des formatierten Datepicker-Datums bei setup() der Komponente -->
-          <h1> Meine Belege vom {{pickedDate}} </h1>
+          <h1> Meine Belege vom {{headerDate}} </h1>
         </div>
         <div class="window">
           <p> Hier sollen die Belege vom {{pickedDate}} aufgelistet werden. </p>
@@ -62,6 +62,7 @@ export default {
   data () {
     return {
       // pickedDate: this.format(new Date()),
+      headerDate: this.format(new Date()),
       pickedDate: new Date(),
       sum: 0,
       error: null
@@ -81,6 +82,7 @@ export default {
       - Ausrechnen der Belegsumme & Darstellung im Fenster rechts unten  */
     updateDate() {
       this.pickedDate = this.format(this.picked);
+      this.headerDate = this.format(this.picked);
     },
     async getList() {
       console.log(this.picked);
@@ -130,6 +132,7 @@ export default {
 .glass {
   min-height: 55vh;
   width: 60%;
+  height: auto;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   border-radius: 2rem;
   z-index: 3;
@@ -138,6 +141,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 10px 0px;
 }
 
 .calendarcontainer {
@@ -148,14 +152,6 @@ export default {
   height: 300px;
   width: auto;
   border-radius: 2rem;
-}
-
-.calendarview {
-  
-}
-
-.info {
-  
 }
 
 .header {
@@ -220,7 +216,7 @@ export default {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bolder;
   margin: 4px 2px;
   margin: 40px 10px;
@@ -236,6 +232,45 @@ button a {
   border-color: red;
   color: red;
   z-index: 3;
+}
+
+@media screen and (max-width: 700px) {
+  .glass {
+    width: 90%;
+    flex-direction: column;
+  }
+
+  .header {
+    padding: 10px;
+  }
+
+  .info {
+    padding: 10px 0px;
+  }
+  
+  .circle1 {
+    width: 10rem;
+    height: 10rem;
+    bottom: 1%;
+    left: 55%;
+    z-index: 2;
+  }
+
+  .circle2 {
+    width: 16rem;
+    height: 16rem;
+    top: 38%;
+    left: 25%;
+    z-index: 2;
+  }
+
+  .circle3 {
+    width: 11rem;
+    height: 11rem;
+    top: 10%;
+    left: 55%;
+    z-index: 2;
+  }
 }
 
 </style>

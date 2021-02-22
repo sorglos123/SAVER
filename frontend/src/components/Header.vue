@@ -3,13 +3,7 @@
         <div class="bar">
             <div class="title">
                 <h1> SAVER </h1>
-                <!-- <button class="button"> -->
-                    <!-- Falls User nicht eingeloggt: Weiterleitung zum Login -->
-                    <!-- Falls User eingeloggt: Weiterleitung zu Home -->
-                    <!-- <router-link to="/"> <h1> SAVER </h1> </router-link> -->
-                <!-- </button> -->
             </div>
-            <!-- TODO: Zeige die Buttons Login/Registrierung nur an, wenn der Benutzer nicht eingeloggt ist -> Store -->
             <div class="buttons">
                 <button class="button" @click="navigateTo({name: 'login'})" type="button" v-if="!$store.state.isUserLoggedIn"> Login </button>
                 <button class="button" @click="navigateTo({name: 'register'})" type="button" v-if="!$store.state.isUserLoggedIn"> Registrierung </button>
@@ -47,11 +41,10 @@ button a {
 }
 
 .bar {
-    margin: 0 auto;
     background: #1b4332;
     color: white;
-    width: auto;
     height: 80px;
+    width: auto;
     display: flex;
 }
 
@@ -87,5 +80,49 @@ button a {
 
 .button:hover {
     background: #081c15;
+}
+
+@media screen and (max-width: 700px) {
+    h1 {
+        padding: 0px 0px 10px 10px;
+        margin: 4px 4px;
+    }
+    
+    .bar {
+        margin: 0 auto;
+        background: #1b4332;
+        color: white;
+        width: auto;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .title {
+        flex: 1;
+        display: flex;
+        align-items: right;
+        justify-content: center;
+    }
+
+    .buttons {
+        flex: 1;
+    }
+
+    .button {
+        background: #1b4332;
+        border: none;
+        color: white;
+        padding: 14px 7.5px 10px 7.5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: bolder;
+        margin: 4px;
+        cursor: pointer;
+        text-transform: uppercase;
+        height: 30px;
+    }
 }
 </style>

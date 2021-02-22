@@ -10,9 +10,9 @@
             <label for="receipt_store"> Verkaufsstelle: </label>
             <input type="text" v-model="store" name="receipt_store" id="receipt_store" placeholder="Verkaufsstelle"><br><br>
             <label for="receipt_value"> Belegsumme: </label>
-            <input type="text" v-model="value" name="receipt_value" id="receipt_value" placeholder="Belegsumme"><br><br>
+            <input type="text" v-model="value" name="receipt_value" id="receipt_value" placeholder="Belegsumme"> <br> <br>
         </div>
-        <div class="preview" id="preview">
+        <div class="full-preview" id="preview">
           <img class="fit" v-if="url" :src="url" />
         </div>
       </section>
@@ -72,8 +72,7 @@ export default {
 
 .glass {
   min-height: 65vh;
-  min-width: 80vh;
-  width: 60%;
+  width: 80%;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   border-radius: 2rem;
   z-index: 3;
@@ -82,9 +81,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
 }
 
-.preview {
+.full-preview {
   flex: 2;
   height: 60vh;
   width: auto;
@@ -92,6 +92,8 @@ export default {
 
 .form {
   flex: 1;
+  height: auto;
+  width: 100%;
 }
 
 .fit {
@@ -158,6 +160,56 @@ button a {
   border-color: red;
   color: red;
   z-index: 3;
+}
+
+@media screen and (max-width: 700px) {  
+  .glass {
+    flex-direction: column;
+  }
+
+  .form {
+    width: 90%;
+    height: auto;
+    margin-top: 10px;
+  }
+
+  .button {
+    padding: 7.5px 16px;
+    font-size: 12px;
+  }
+
+  .fit {
+    object-fit: fill; /* image is resized to fill the given dimension. If necessary, the image will be stretched or squished to fit */
+    /* object-fit: contain; /* image keeps its aspect ratio, but is resized to fit within the given dimension */
+    /* object-fit: cover; /*   image keeps its aspect ratio and fills the given dimension. The image will be clipped to fit */ 
+    /* object-fit: scale-down; /* the image is scaled down to the smallest version of none or contain */
+    height: 80%;
+    width: auto;
+  }
+  
+  .circle1 {
+    width: 10rem;
+    height: 10rem;
+    bottom: 1%;
+    left: 55%;
+    z-index: 2;
+  }
+
+  .circle2 {
+    width: 16rem;
+    height: 16rem;
+    top: 38%;
+    left: 25%;
+    z-index: 2;
+  }
+
+  .circle3 {
+    width: 11rem;
+    height: 11rem;
+    top: 10%;
+    left: 55%;
+    z-index: 2;
+  }
 }
 
 </style>

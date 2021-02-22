@@ -4,9 +4,6 @@
         <div class="upper">
           <div class="upload">
             <button class="button" @click="navigateTo('/upload')" type="button"> Neuen Beleg hochladen </button>
-            <!-- <button class="button">
-              <router-link to="/upload"> Neuen Beleg hochladen </router-link>
-            </button> -->
           </div>
           <div class="header">
               <h1> Meine Belegübersicht </h1>
@@ -14,32 +11,29 @@
           <div class="options">
             <div class="filter">
               <p> Meine Belege <b> durchsuchen </b> nach: </p> <br>
-              <input type="radio" id="store_filter" value="Verkaufsstelle" v-model="filter_criterion">
+              <input type="radio" id="store_filter" value="Verkaufsstelle" v-model="filter_criterion"> <br>
               <label for="store">Verkaufsstelle</label> <br>
-              <input type="radio" id="value_filter" value="Belegsumme" v-model="filter_criterion">
+              <input type="radio" id="value_filter" value="Belegsumme" v-model="filter_criterion"> <br>
               <label for="value">Belegsumme</label> <br> <br>
                 <div v-if="filter_criterion === 'Verkaufsstelle'" class="store">
-                  <span> <b> Verkaufsstelle: </b> </span>
-                  <input type="text" name="filter_store" v-model="filter_store" autocomplete="off" placeholder="Verkaufsstelle"> <br>
+                  <input class="input" type="text" name="filter_store" v-model="filter_store" autocomplete="off" placeholder="Verkaufsstelle"> <br>
                 </div>
                 <div v-if="filter_criterion === 'Belegsumme'" class="value">
-                  <span> <b> Belegsumme: </b> </span> <br>
                   <input type="radio" id="less" value="Weniger als " v-model="choice">
                   <label for="less">Weniger als</label>
                   <span> oder </span>
                   <input type="radio" id="more" value="Mehr als " v-model="choice">
                   <label for="more">Mehr als</label> <br>
-                  <span> <b> {{ choice }} </b> </span> 
-                  <input type="text" name="filter_value" v-model="filter_value" autocomplete="off" placeholder="Belegsumme"> Euro <br>
+                  <input class="input" type="text" name="filter_value" v-model="filter_value" autocomplete="off" placeholder="Belegsumme"> Euro <br>
                 </div> <br>
               <!-- <button class="button" @click="filterListBy(filter_criterion, filter_store, choice, filter_value)">Belege durchsuchen</button> <br> -->
                 <button class="button" @click="filterList()">Belege durchsuchen</button> <br>
             </div>
             <div class="sort">
               <p> Meine Belege <b> sortieren </b> nach: </p> <br>
-              <input type="radio" id="store_search" value="Verkaufsstelle" v-model="search_criterion">
+              <input type="radio" id="store_search" value="Verkaufsstelle" v-model="search_criterion"> <br>
               <label for="store">Verkaufsstelle</label> <br>
-              <input type="radio" id="value_search" value="Belegsumme" v-model="search_criterion">
+              <input type="radio" id="value_search" value="Belegsumme" v-model="search_criterion"> <br>
               <label for="value">Belegsumme</label> <br> <br>
               <button class="button" @click="sortList()">Belege sortieren</button> <br>
             </div>
@@ -180,6 +174,7 @@ export default {
 .glass {
   min-height: 65vh;
   width: 60%;
+  height: auto;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   border-radius: 2rem;
   z-index: 3;
@@ -190,6 +185,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   justify-content: space-between;
+  margin: 10px 0px;
 }
 
 .header {
@@ -206,14 +202,20 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: auto;
 }
 
 .filter {
   flex: 1;
+  width: 100%;
+  height: auto;
 }
 
 .sort {
   flex: 1;
+  width: 100%;
+  height: auto;
 }
 
 .data {
@@ -290,6 +292,52 @@ button a {
   border-color: red;
   color: red;
   z-index: 3;
+}
+
+@media screen and (max-width: 700px) {
+  .glass {
+    width: 90%;
+  }
+
+  .filter {
+    flex: 2;
+    width: 100%;
+    height: auto;
+  }
+
+  .sort {
+    flex: 1;
+    width: 100%;
+    height: auto;
+  }
+
+  .input {
+    width: 80%;
+  }
+  
+  .circle1 {
+    width: 10rem;
+    height: 10rem;
+    bottom: 1%;
+    left: 55%;
+    z-index: 2;
+  }
+
+  .circle2 {
+    width: 16rem;
+    height: 16rem;
+    top: 38%;
+    left: 25%;
+    z-index: 2;
+  }
+
+  .circle3 {
+    width: 11rem;
+    height: 11rem;
+    top: 10%;
+    left: 55%;
+    z-index: 2;
+  }
 }
 
 </style>

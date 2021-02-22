@@ -103,7 +103,6 @@ main {
 }
 
 .button {
-  background: linear-gradient(to right top, #40916c, #74c69d);
   background: linear-gradient(to bottom, #bbd2c5, #536976, #292e49); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: none;
   color: white;
@@ -122,6 +121,14 @@ main {
   border-color: red;
   color: red;
   z-index: 3;
+}
+
+@media screen and (max-width: 700px) {
+  .button {
+    padding: 7.5px 16px;
+    font-size: 12px;
+    margin: 4px 2px;
+  }
 }
 
 </style>
