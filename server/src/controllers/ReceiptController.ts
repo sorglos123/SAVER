@@ -31,5 +31,8 @@ module.exports = {
 
         //indivudal response: overview Receipt + Individual Items
 
+    },
+    async uploadReceipt(req, res){
+        
     }
 }
