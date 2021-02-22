@@ -1,4 +1,7 @@
 import * as mariadb from 'mariadb';
+import * as multer from 'multer';
+const upload = multer({dest: '../images/'}); 
+
 const pool = mariadb.createPool({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: process.env.DB, connectionLimit: 5 });
 
 export class Item {
@@ -101,5 +104,9 @@ export async function getDates(uid: number) {
 
 
         }
+    }
+    
+    export async function uploadReceipt() {
+        upload.single('receiptImage');
     };
 
