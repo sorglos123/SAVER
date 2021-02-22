@@ -126,6 +126,7 @@ button a {
         padding: 47px 8px;
         text-align: center;
         display: inline-block;
+        font-weight: bolder;
         font-size: 10px;
         margin: 2px 1px;
         cursor: pointer;
