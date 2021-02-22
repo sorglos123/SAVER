@@ -33,6 +33,6 @@ module.exports = {
 
     },
     async uploadReceipt(req, res){
-        
+        //  files in req.files ; body in req.body
     }
 }
