@@ -27,13 +27,12 @@ services:
       - ./server/src/controllers:/app/src/controllers
       - ./server/src/dblogic:/app/src/dblogic
      
-
-  vue:
-    build: './frontend'
-    restart: always
-    ports:
-      - 8080:8080
-    
+#  vue:
+#    build: './frontend'
+#    restart: always
+#    ports:
+#      - 8080:8080
+#    
   
 
 volumes:
