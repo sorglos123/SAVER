@@ -125,7 +125,9 @@ export async function getItems(receipts: any) {
     }
 }
 
-export async function uploadReceipt(file: any) {
-    await upload.single(file);
+export async function  uploadReceipt() {
+   
+    
+
 };
 

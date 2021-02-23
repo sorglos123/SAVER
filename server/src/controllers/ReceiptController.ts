@@ -34,8 +34,8 @@ module.exports = {
     },
     async uploadReceipt(req, res){
         try {
-            console.log(req.body.Quittung); 
-            await r.uploadReceipt(req.file); 
+            
+            
             return res.status(200).send({
                 message: "Success"
             })
