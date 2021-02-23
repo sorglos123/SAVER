@@ -20,9 +20,8 @@ export default {
             this.$router.push(route);
         },
         logout() {
-            this.$store.dispatch('setToken', null);
-            this.$store.dispatch('setUser', null);
-            this.$router.push({name: 'login'});
+            this.$store.dispatch('nullLogin');
+            this.$router.push('/');
         }
     }
 }
