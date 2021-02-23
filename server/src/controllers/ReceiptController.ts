@@ -3,9 +3,22 @@ import * as r from "../dblogic/receipt";
 
 module.exports = {
 
+    async getAllReceipts(req, res) {
+        console.log("User ID: " + req.body.uid);
+        try {
+            const receiptList = await r.getUserReceipts(req.body.uid);
+            
+            return res.status(200).send({
+                message: "Folgende Belege wurden gefunden",
+                receipts: receiptList,
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    
     async getDates(req, res){
         //load only dates for all available receipts in database
-
     },
 
     async getReceipt(req, res){

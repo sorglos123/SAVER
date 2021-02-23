@@ -41,6 +41,31 @@ export async function getDates(uid: number) {
     }
 };
 
+export async function getUserReceipts(uid: number) {
+    var conn;
+    console.log('Fetching all recipes...');
+    try {
+        conn = await pool.getConnection();
+        const res = await conn.query("SELECT receipt_id, total_value, receipt_date, supermarket FROM receipts \
+    WHERE user_id = ?;", [uid]);
+        if (res == 0) {
+            console.log("No receipts found!");
+            throw new Error("There were no receipts to fetch.");
+        }
+        else {
+            return res;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    finally {
+        console.log("trying to close");
+        if (conn != null) {
+            conn.end();
+        }
+    }
+};
+
     export async function getReceipts(uid: number, date: string) {
         var conn;
 
