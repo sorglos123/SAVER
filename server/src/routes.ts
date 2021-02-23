@@ -16,10 +16,13 @@ module.exports = (app) => {
     /* Route 3: Update user data */
     app.post('/updateUser', UpdateController.updateUser);
 
-    /* Route 4: Get a receipt for a specific date */
+    /* Route 4: Get all receipts for a specific user id*/
+    app.post('/receipts', ReceiptController.getAllReceipts);
+
+    /* Route 5: Get a receipt for a specific date */
     app.post('/calendar', ReceiptController.getReceipt);
 
-    /* Route 5: Get a calendar dates for a specific date */
+    /* Route 6: Get a calendar dates for a specific date */
     app.post('/updatecalender', ReceiptController.getDates);
 
 }
