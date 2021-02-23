@@ -4,7 +4,8 @@
       <div class="data">
         <div class="header">
           <!-- Ausgabe des formatierten Datepicker-Datums bei setup() der Komponente -->
-          <h1> Meine Belege vom {{headerDate}} </h1>
+          <h1> Meine Belege vom </h1> 
+          <h1> {{headerDate}} </h1>
         </div>
         <div class="window">
           <div class="receiptlist"
@@ -267,12 +268,12 @@ export default {
 }
 
 .store {
-  flex: 4;
+  flex: 1;
   text-align: left;
 }
 
 .value {
-  flex: 2;
+  flex: 1;
   text-align: right;
 }
 
