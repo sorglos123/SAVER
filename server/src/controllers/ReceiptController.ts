@@ -33,6 +33,19 @@ module.exports = {
 
     },
     async uploadReceipt(req, res){
+        try {
+            console.log(req.body.Quittung); 
+            await r.uploadReceipt(req.file); 
+            return res.status(200).send({
+                message: "Success"
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({
+                error: "irgendwas ist schief gegangen"
+            })
+        }
+        
         //  files in req.files ; body in req.body
     }
 }
