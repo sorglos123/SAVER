@@ -26,7 +26,7 @@
             :inputFormat="inputFormat"
           >
           </datepicker>
-          <button class="button" @click="updateDate(); getReceipts()" type="button">Belege anzeigen</button> <br>
+          <button class="button" @click="deleteReceipts(); updateDate(); getReceipts()" type="button">Belege anzeigen</button> <br>
         </div>
         <div class="info">
           <p> Belegsumme </p>
@@ -159,9 +159,6 @@ export default {
           receiptDate: this.formatForDB(this.pickedDate),
           uid: this.$store.state.userID
         });
-
-        // Delete the elements of former method calls
-        this.receipts.splice(0, this.receipts.length);
         
         // Add the elements of the actual DB query
         for(var j=0; j<response.data.receipts.length; j++) {
@@ -177,6 +174,11 @@ export default {
       } catch(error) {
         this.error = error.response.data.error;
       }
+    },
+    deleteReceipts() {
+      // Delete the elements of former method calls
+      this.receipts.splice(0, this.receipts.length);
+      this.sum = '';
     },
     addReceipt(rcp) {
       this.nextReceiptID++;
@@ -255,7 +257,7 @@ export default {
   background: white;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   color: black;
-  border-radius: 2rem;
+  border-bottom-left-radius: 2rem;
 }
 
 .receiptlist {
