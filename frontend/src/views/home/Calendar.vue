@@ -71,16 +71,6 @@ export default {
       headerDate: this.format(new Date()),
       pickedDate: new Date(),
       receipts: [
-        /* {
-          id: 0,
-          receiptStore: 'Kaufland',
-          receiptValue: '1,11 €'
-        },
-        {
-          id: 1,
-          receiptStore: 'LIDL',
-          receiptValue: '2,22 €'
-        } */
       ],
       receiptValue: 0,
       receiptStore: '',
@@ -156,7 +146,7 @@ export default {
     async getReceipts() {
       this.nextReceiptID = 0;
       try {
-        const response = await ListService.queryList({
+        const response = await ListService.queryCalendarList({
           receiptDate: this.formatForDB(this.pickedDate),
           uid: this.$store.state.userID
         });
@@ -346,6 +336,10 @@ button a {
 
   .info {
     padding: 10px 0px;
+  }
+
+  .window {
+      border-radius: 0rem;
   }
   
   .circle1 {
