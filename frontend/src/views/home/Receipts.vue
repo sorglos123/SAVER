@@ -19,15 +19,15 @@
                   <input class="input" type="text" name="filter_store" v-model="filter_store" autocomplete="off" placeholder="Verkaufsstelle"> <br>
                 </div>
                 <div v-if="filter_criterion === 'Belegsumme'" class="value">
-                  <input type="radio" id="less" value="Weniger als " v-model="choice">
+                  <input type="radio" id="less" value="less" v-model="choice">
                   <label for="less">Weniger als</label>
                   <span> oder </span>
-                  <input type="radio" id="more" value="Mehr als " v-model="choice">
+                  <input type="radio" id="more" value="more" v-model="choice">
                   <label for="more">Mehr als</label> <br>
                   <input class="input" type="text" name="filter_value" v-model="filter_value" autocomplete="off" placeholder="Belegsumme"> Euro <br>
                 </div> <br>
               <!-- <button class="button" @click="filterListBy(filter_criterion, filter_store, choice, filter_value)">Belege durchsuchen</button> <br> -->
-                <button class="button" @click="filterList()">Belege durchsuchen</button> <br>
+                <button class="button" @click="filterList()" type="button">Belege durchsuchen</button> <br>
             </div>
             <div class="sort">
               <p> Meine Belege <b> sortieren </b> nach: </p> <br>
@@ -35,21 +35,25 @@
               <label for="store">Verkaufsstelle</label> <br>
               <input type="radio" id="value_search" value="Belegsumme" v-model="search_criterion"> <br>
               <label for="value">Belegsumme</label> <br> <br>
-              <button class="button" @click="sortList()">Belege sortieren</button> <br>
+              <button class="button" @click="sortList()" type="button">Belege sortieren</button> <br>
             </div>
           </div>
-          <button class="button" @click="getList()">Belege anzeigen</button> <br>
+          <button class="button" @click="deleteReceipts(); getReceipts()" type="button">Belege anzeigen / Filter zurücksetzen</button> <br>
         </div>
         <div class="window">
           <!-- Dieses div reagiert aktuell auf den File-Upload! Allerdings soll es ja auf die Filterung/
           Sortierung reagieren, das muss noch angepasst werden. -->
-          <p> Hier sollen die Belege aufgelistet werden. </p>
           <!-- Zugriff auf die verschiedenen v-models per {{ selectedFile.name }} oder {{ filter_criterion }} -->
-          {{filter_criterion}}
-          {{search_criterion}}
-          {{filter_store}}
-          {{choice}}
-          {{filter_value}}
+          <div class="receiptlist"
+            v-for="receipt in receipts"
+            :key="receipt.id"
+            :date="receipt.receiptDate"
+            :store="receipt.receiptStore"
+            :value="receipt.receiptValue">
+            <div class="store"> {{receipt.id}}. {{receipt.receiptStore}} </div>
+            <div class="value"> {{receipt.receiptValue}} Euro </div>
+            <div class="date"> {{receipt.receiptDate}} </div>
+          </div>
         </div>
       </section> 
       <div class="circle1"></div>
@@ -69,6 +73,12 @@ export default {
       filter_store: '',
       choice: '',
       filter_value: '',
+      receipts: [
+      ],
+      receiptDate: '',
+      receiptValue: 0,
+      receiptStore: '',
+      nextReceiptID: 0,
     }
   },
   methods: {
@@ -79,55 +89,106 @@ export default {
       this.selectedFile = document.getElementById('receipt').files[0];
       console.log(this.selectedFile);
     },
-    async getList() {
-      console.log(this.$store.state.userID);
+    format(timestamp) {
+      const dateString = timestamp.toString();
+      const dateElements = dateString.split('-');
+      var day = dateElements[2].split('T')[0];
+      var tmp = day.concat('.', dateElements[1], '.', dateElements[0]);
+      return tmp;
+    },
+    async getReceipts() {
+      this.nextReceiptID = 0;      
       try {
-        const response = await ListService.queryList({
+        const response = await ListService.queryUserList({
           uid: this.$store.state.userID
         });
-        console.log(response);
-        // return response;
+        
+        // Add the elements of the actual DB query
+        for(var j=0; j<response.data.receipts.length; j++) {
+          this.addReceipt(response.data.receipts[j]);
+        }
       } catch(error) {
         this.error = error.response.data.error;
       }
     },
-    async showReceipts() {
-      // Anzeigen der Belege im Frontend
-      // const receiptList = await getList();
-      // return receiptList;
-      // Danach im <div> mit For-Schleife durch receiptList durchgehen und Einträge aus Verkaufsstelle und
-      // Belegsumme zusammensetzen
+    deleteReceipts() {
+      // Delete the elements of former method calls
+      this.receipts.splice(0, this.receipts.length);
+    },
+    addReceipt(rcp) {
+      this.nextReceiptID++;
+      this.receipts.push({
+        id: this.nextReceiptID,
+        receiptStore: rcp.supermarket,
+        receiptValue: this.formatEnglishCurrencyGerman(rcp.total_value),
+        receiptDate: this.format(rcp.receipt_date)
+      })
+      this.receiptDate = '';
+      this.receiptStore = '';
+      this.receiptValue = 0;
     },
     filterList() {
       if(this.filter_criterion === 'Verkaufsstelle') {
         this.choice = null;
         this.filter_value = null;
-        console.log("Filtern nach: " + this.filter_criterion);
-        console.log("Verkaufsstelle: " + this.filter_store);
-        console.log("Mehr/weniger als: " + this.choice);
-        console.log("Belegsumme: " + this.filter_value);
+
+        // Remove elements from receipt list, when their receiptStore matches the given filter_store
+        this.receipts = this.receipts.filter(receipt => receipt.receiptStore == this.filter_store);
       } else if(this.filter_criterion === 'Belegsumme') {
         this.filter_store = null;
-        console.log("Filtern nach: " + this.filter_criterion);
-        console.log("Verkaufsstelle: " + this.filter_store);
-        console.log("Mehr/weniger als: " + this.choice);
-        console.log("Belegsumme: " + this.filter_value);
+        
+        // Remove elements from receipt list, when their receiptValue matches the given 
+        // upper or lower limit (filter_value)
+        if(this.choice === "less") {
+            this.receipts = this.receipts.filter(receipt => parseFloat(this.formatGermanCurrencyEnglish(receipt.receiptValue)) < parseInt(this.filter_value));
+        } else if(this.choice === "more") {
+            this.receipts = this.receipts.filter(receipt => parseFloat(this.formatGermanCurrencyEnglish(receipt.receiptValue)) > parseInt(this.filter_value));
+        }
       }
+    },
+    sortByStore(a,b) {
+      if ( a.receiptStore < b.receiptStore ){
+        return -1;
+      }
+      if ( a.receiptStore > b.receiptStore ){
+        return 1;
+      }
+      return 0;
+    },
+    sortByValue(a,b) {
+      if ( parseFloat(a.receiptValue) < parseFloat(b.receiptValue) ){
+        return -1;
+      }
+      if ( parseFloat(a.receiptValue) > parseFloat(b.receiptValue) ){
+        return 1;
+      }
+      return 0;
     },
     sortList() {
       if(this.search_criterion === 'Verkaufsstelle') {
-        console.log("Sortiert nach Verkaufsstelle");
+        this.receipts = this.receipts.sort(this.sortByStore);
       } else if(this.search_criterion === 'Belegsumme') {
-        console.log("Sortiert nach Belegsumme");
+        this.receipts = this.receipts.sort(this.sortByValue);
       }
-    }
+    },
+    formatEnglishCurrencyGerman(currency) {
+      const values = currency.toString().split('.');
+      var euro = values[0];
+      var tmp = euro.concat(',',values[1]);
+      return tmp;
+    },
+    formatGermanCurrencyEnglish(currency) {
+      const value = currency.toString().split(',');
+      var dollar = value[0];
+      var tmp = dollar.concat('.',value[1]);
+      return tmp;
+    },
   },
 }
 </script>
 
 
 <style scoped>
-
 * {
   margin: 0;
   padding: 0;
@@ -235,6 +296,27 @@ export default {
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   color: black;
   border-radius: 0rem 0rem 2rem 2rem;
+}
+
+.receiptlist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.store {
+  flex: 1;
+  text-align: left;
+}
+
+.value {
+  flex: 1;
+  text-align: middle;
+}
+
+.date {
+  flex: 1;
+  text-align: right;
 }
 
 .button {
