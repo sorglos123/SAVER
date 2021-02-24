@@ -2,14 +2,24 @@
     <div class="main">
       <section class="glass">
         <div class="form">
-          <input type="file" @change="preview" id="receipt" name="receipt" accept="image/png, image/jpeg, .pdf">
-            <button class="button" type="button" @click="displayProperties"> Beleg hochladen </button> <br>
+          <input 
+            style="display: none" 
+            type="file" 
+            @change="preview" 
+            id="receipt" 
+            name="receipt" 
+            accept="image/png, image/jpeg, .pdf"
+            ref="fileInput">
+            <label for="choose_button"> Bitte wählen Sie eine Datei zum Hochladen aus: </label> <br>
+            <button class="button" name="choose_button" type="button" @click="$refs.fileInput.click()"> Datei auswählen </button> <br>
+            <label for="upload_button"> Danach können Sie den Beleg hochladen: </label> <br>
+            <button class="button" name="upload_button" type="button" @click="displayProperties(); uploadReceipt()"> Beleg hochladen </button> <br>
             <br> <div class="error" v-html="error"></div> <br>
-            <label for="receipt_date"> Belegdatum: </label>
+            <label for="receipt_date"> Belegdatum: </label> <br>
             <input type="text" v-model="date" name="receipt_date" id="receipt_date" placeholder="Belegdatum"><br><br>
-            <label for="receipt_store"> Verkaufsstelle: </label>
+            <label for="receipt_store"> Verkaufsstelle: </label> <br>
             <input type="text" v-model="store" name="receipt_store" id="receipt_store" placeholder="Verkaufsstelle"><br><br>
-            <label for="receipt_value"> Belegsumme: </label>
+            <label for="receipt_value"> Belegsumme: </label> <br>
             <input type="text" v-model="value" name="receipt_value" id="receipt_value" placeholder="Belegsumme"> <br> <br>
         </div>
         <div class="full-preview" id="preview">
@@ -24,19 +34,21 @@
 </template>
 
 <script>
-
+import UploadService from '@/services/UploadService'
 export default {
   data () {
     return {
       url: null,
       date: '',
       store: '',
-      value: '',
+      value: 0,
+      selectedFile: null,
       error: null
     }
   },
   methods: {
     preview(e) {
+      this.selectedFile = e.target.files[0];
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
@@ -44,6 +56,25 @@ export default {
       console.log(this.date);
       console.log(this.store);
       console.log(this.value);
+    },
+    async uploadReceipt() {
+      try {
+        var formdata = new FormData();
+        formdata.append('receiptImage', this.selectedFile, this.selectedFile.name);
+        console.log(formdata);
+        console.log(formdata.has('receiptImage'));        
+        const response = await UploadService.uploadReceiptData({
+          date: this.date,
+          store: this.store,
+          value: this.value,
+          // formData enthält das vom Benutzer hochgeladene Bild
+          formData: formdata,
+          uid: this.$store.state.userID
+        });
+        console.log(response);
+      } catch(error) {
+        this.error = error.response.data.error;
+      }
     }
   }
 }
@@ -88,12 +119,14 @@ export default {
   flex: 2;
   height: 60vh;
   width: auto;
+  margin: 5px;
 }
 
 .form {
   flex: 1;
   height: auto;
   width: 100%;
+  margin: 5px;
 }
 
 .fit {
@@ -145,7 +178,7 @@ export default {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
