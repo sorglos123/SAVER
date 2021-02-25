@@ -32,15 +32,16 @@ export default {
   grid-template-columns: 1fr 5fr;
   background-color: #1b4332;
   color: white;
-  height: 100vh;
-  width: 100%;
+  height: 100%;
+  width: auto;
 }
 
 .content {
   border-radius: 20px;
-  margin: 6px 6px 6px 0px;
-  margin-left: 8px; /* Sollte dieselbe Größe haben wie die width der .bar in Sidebar.vue */
+  margin: 0px 0px 0px 0px;
   background: linear-gradient(to right top, #40916c, #74c69d);
+  width: auto;
+  height: 100%;
 }
 
 .circle1, .circle2 {
@@ -65,7 +66,6 @@ export default {
 }
 
 .button {
-  /* background: linear-gradient(to right top, #40916c, #74c69d); */
   border: none;
   color: white;
   padding: 15px 32px;

@@ -4,10 +4,18 @@
       <div class="data">
         <div class="header">
           <!-- Ausgabe des formatierten Datepicker-Datums bei setup() der Komponente -->
-          <h1> Meine Belege vom {{pickedDate}} </h1>
+          <h1> Meine Belege vom </h1> 
+          <h1> {{headerDate}} </h1>
         </div>
         <div class="window">
-          <p> Hier sollen die Belege vom {{pickedDate}} aufgelistet werden. </p>
+          <div class="receiptlist"
+            v-for="receipt in receipts"
+            :key="receipt.id"
+            :store="receipt.receiptStore"
+            :value="receipt.receiptValue">
+            <div class="store"> {{receipt.id}}. {{receipt.receiptStore}} </div>
+            <div class="value"> {{receipt.receiptValue}} </div>
+          </div>
         </div>
       </div>
       <div class="calendarcontainer">
@@ -19,12 +27,11 @@
             :inputFormat="inputFormat"
           >
           </datepicker>
-          <button class="button" @click="updateDate(); getList()" type="button">Belege anzeigen</button> <br>
+          <button class="button" @click="deleteReceipts(); updateDate(); getReceipts()" type="button">Belege anzeigen</button> <br>
         </div>
         <div class="info">
-          <p> Belegsumme ({{pickedDate}}) </p>
+          <p> Belegsumme </p>
           <div>
-            <!-- Hier soll die berechnete Belegsumme angezeigt werden. -->
             <input type="text" v-model="sum"> 
           </div>
         </div>
@@ -61,9 +68,14 @@ export default {
   },
   data () {
     return {
-      // pickedDate: this.format(new Date()),
+      headerDate: this.format(new Date()),
       pickedDate: new Date(),
-      sum: 0,
+      receipts: [
+      ],
+      receiptValue: 0,
+      receiptStore: '',
+      nextReceiptID: 0, 
+      sum: '',
       error: null
     }
   },
@@ -75,42 +87,106 @@ export default {
       var tmp = day.concat('. ', dateElements[1], ' ', dateElements[3]);
       return tmp;
     },
-    /* 3 Teilschritte beim Betätigen des Abschicken-Buttons:
-      - Anpassung des Headers (format() & updateDate())
-      - Abruf der Belege aus der Datenbank & Anzeigen in Listenform (getList() & showReceipts())
-      - Ausrechnen der Belegsumme & Darstellung im Fenster rechts unten  */
-    updateDate() {
-      this.pickedDate = this.format(this.picked);
+    formatForDB(timestamp) {
+      const timeString = timestamp.toString();
+      const elements = timeString.split(' ');
+      var year = elements[3];
+      var month;
+      switch(elements[1]) {
+        case 'Jan':
+          month = '01';
+          break;
+        case 'Feb':
+          month = '02';
+          break;
+        case 'Mar':
+          month = '03';
+          break;
+        case 'Apr':
+          month = '04';
+          break;
+        case 'Mai':
+          month = '05';
+          break;
+        case 'Jun':
+          month = '06';
+          break;
+        case 'Jul':
+          month = '07';
+          break;
+        case 'Aug':
+          month = '08';
+          break;
+        case 'Sep':
+          month = '09';
+          break;
+        case 'Oct':
+          month = '10';
+          break;
+        case 'Nov':
+          month = '11';
+          break;
+        case 'Dec':
+          month = '12';
+          break;
+      }
+      var tmp = year.concat('-', month, '-', elements[2]);
+      return tmp;
     },
-    async getList() {
-      console.log(this.picked);
-      console.log(this.$store.state.userID);
+    formatCurrency(currency) {
+      const values = currency.toString().split('.');
+      var euro = values[0];
+      var tmp = euro.concat(',',values[1],' Euro');
+      return tmp;
+    },
+    updateDate() {
+      this.pickedDate = this.picked;
+      this.headerDate = this.format(this.picked);
+    },
+    async getReceipts() {
+      this.nextReceiptID = 0;
       try {
-        const response = await ListService.queryList({
-          date: this.pickedDate,
+        const response = await ListService.queryCalendarList({
+          receiptDate: this.formatForDB(this.pickedDate),
           uid: this.$store.state.userID
         });
-        console.log(response);
-        // return response;
+        
+        // Add the elements of the actual DB query
+        for(var j=0; j<response.data.receipts.length; j++) {
+          this.addReceipt(response.data.receipts[j]);
+        }
+        
+        // Evaluate the sum of all array elements
+        var tmpSum = 0;
+        for(var k=0; k<response.data.receipts.length; k++) {
+          tmpSum += response.data.receipts[k].total_value;
+          this.sum = this.formatCurrency(tmpSum.toString());
+        }
       } catch(error) {
         this.error = error.response.data.error;
       }
     },
-    async showReceipts() {
-      // Anzeigen der Belege im Frontend
-      // const receiptList = await getList();
-      // return receiptList;
-      // Danach im <div> mit For-Schleife durch receiptList durchgehen und Einträge aus Verkaufsstelle und
-      // Belegsumme zusammensetzen
+    deleteReceipts() {
+      // Delete the elements of former method calls
+      this.receipts.splice(0, this.receipts.length);
+      this.sum = '';
+    },
+    addReceipt(rcp) {
+      this.nextReceiptID++;
+      this.receipts.push({
+        id: this.nextReceiptID,
+        receiptStore: rcp.supermarket,
+        receiptValue: this.formatCurrency(rcp.total_value)
+      })
+      this.receiptStore = '';
+      this.receiptValue = 0;
     },
   },
 }
-
 </script>
 
 
 <style scoped>
-
 * {
   margin: 0;
   padding: 0;
@@ -130,6 +206,7 @@ export default {
 .glass {
   min-height: 55vh;
   width: 60%;
+  height: auto;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   border-radius: 2rem;
   z-index: 3;
@@ -138,6 +215,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 10px 0px;
 }
 
 .calendarcontainer {
@@ -148,14 +226,6 @@ export default {
   height: 300px;
   width: auto;
   border-radius: 2rem;
-}
-
-.calendarview {
-  
-}
-
-.info {
-  
 }
 
 .header {
@@ -178,7 +248,23 @@ export default {
   background: white;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   color: black;
-  border-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+}
+
+.receiptlist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.store {
+  flex: 1;
+  text-align: left;
+}
+
+.value {
+  flex: 1;
+  text-align: right;
 }
 
 .circle1, .circle2, .circle3, .circle4 {
@@ -220,7 +306,7 @@ export default {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bolder;
   margin: 4px 2px;
   margin: 40px 10px;
@@ -238,4 +324,46 @@ button a {
   z-index: 3;
 }
 
+@media screen and (max-width: 700px) {
+  .glass {
+    width: 90%;
+    flex-direction: column;
+  }
+
+  .header {
+    padding: 10px;
+  }
+
+  .info {
+    padding: 10px 0px;
+  }
+
+  .window {
+      border-radius: 0rem;
+  }
+  
+  .circle1 {
+    width: 10rem;
+    height: 10rem;
+    bottom: 1%;
+    left: 55%;
+    z-index: 2;
+  }
+
+  .circle2 {
+    width: 16rem;
+    height: 16rem;
+    top: 38%;
+    left: 25%;
+    z-index: 2;
+  }
+
+  .circle3 {
+    width: 11rem;
+    height: 11rem;
+    top: 10%;
+    left: 55%;
+    z-index: 2;
+  }
+}
 </style>

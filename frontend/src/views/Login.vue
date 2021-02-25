@@ -7,12 +7,18 @@
         </div>
         <div class="board">
           <div class="info">
-            <div class="text">
+            <div class="full-text">
               <!-- Text eventuell auflockern; Schriftart insgesamt verändern -> etwas lockerer, runder! -->
               <p> SAVER speichert deine Kassenbons, Rechnungen und anderen Kaufbelege und hilft dir über 
               verschiedene Analysen und Auswertungen dabei, einen Überblick über dein Kaufverhalten zu behalten.
               </p>
               <p style="font-weight: bold"> Unter dem Strich kannst du mit SAVER also bares Geld sparen. </p> 
+            </div>
+            <div class="short-text">
+              <!-- Text eventuell auflockern; Schriftart insgesamt verändern -> etwas lockerer, runder! -->
+              <p> SAVER hilft dir dabei, einen Überblick über deine Einkäufe zu behalten.
+              </p>
+              <p style="font-weight: bold; text-align:center"> Unter dem Strich kannst du mit SAVER also bares Geld sparen. </p> 
             </div>
             <div class="pictures">
               <div class="pic">
@@ -38,8 +44,8 @@
           <div class="form">
             <form >
               <br> <h3> Bitte loggen Sie sich ein: </h3> <br>
-              <input type="text" v-model="email" name="email" id="email" placeholder="E-Mail-Adresse"><br><br>
-              <input type="password" v-model="passwd" name="passwd" id="passwd" placeholder="Passwort"><br><br>
+              <input class="input" type="text" v-model="email" name="email" id="email" placeholder="E-Mail-Adresse"><br><br>
+              <input class="input" type="password" v-model="passwd" name="passwd" id="passwd" placeholder="Passwort"><br><br>
               <button class="button" @click="login" type="button">Login</button> <br>
               <br> <div class="error" v-html="error"></div> <br>
               <br> <p> Noch kein Benutzerkonto? </p>
@@ -105,7 +111,7 @@ main {
 .glass {
   background: white;
   min-height: 55vh;
-  width: 60%;
+  width: 80%;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   border-radius: 2rem;
   z-index: 3;
@@ -137,8 +143,12 @@ main {
   color: #1b4332;
 }
 
-.text {
+.full-text {
   flex: 1;
+}
+
+.short-text { 
+  display: none; 
 }
 
 .pictures {
@@ -215,6 +225,55 @@ button a {
   border-color: red;
   color: red;
   z-index: 3;
+}
+
+@media screen and (max-width: 700px) {
+  .glass {
+    min-height: 75vh;
+    width: 80%;
+  }
+
+  .header {
+    padding: 1rem 0rem;
+  }
+
+  .info {
+    flex: 4;
+    margin: 0rem 0rem;
+    padding: 0rem 1rem;
+  }
+
+  .full-text {
+    display: none;
+  }
+
+  .short-text { 
+    flex: 3;
+    width: 50%;
+    display: inline; 
+  }
+
+  .pictures {
+    display: none; 
+  }
+
+  .form {
+    flex: 1;
+    margin: 0rem 0rem;
+    padding: 0rem 1rem;
+  }
+
+  .input {
+    width: 80%;
+  }
+
+  .button {
+    padding: 7.5px 16px;
+    font-size: 14px;
+    font-weight: bolder;
+    margin: 2px 1px;
+    cursor: pointer;
+  }
 }
 
 </style>

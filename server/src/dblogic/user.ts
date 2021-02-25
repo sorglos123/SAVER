@@ -42,7 +42,6 @@ class User {
     }
 
     async create() {
-
         await hashPW(this);
         var conn;
         try {
@@ -66,7 +65,6 @@ class User {
             console.log("trying to close");
             conn.end();
         }
-
     }
     async login() {
         var conn;
@@ -108,7 +106,6 @@ class User {
         return {
             user_id: this.user_id,
             email: this.email,
-
         }
     }
     async updateUserPW(newPW: string) {

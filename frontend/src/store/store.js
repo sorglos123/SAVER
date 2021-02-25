@@ -19,6 +19,11 @@ export default new Vuex.Store({
             } else {
                 state.isUserLoggedIn = false;
             }
+        },
+        nullLogin(state) {
+            state.isUserLoggedIn = false;
+            state.userID = null;
+            state.token = null;
         }
     },
     actions: { // actions: "Ort" für asynchrone Operationen
@@ -27,6 +32,9 @@ export default new Vuex.Store({
         },
         setToken({ commit }, token) {
             commit('setToken', token)
+        },
+        nullLogin({ commit }) {
+            commit('nullLogin')
         }
     }
 })

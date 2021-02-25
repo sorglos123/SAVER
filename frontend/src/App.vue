@@ -23,10 +23,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: black;
-}
-
-#nav {
-  padding: 30px;
+  height: auto;
+  width: 100%;
 }
 
 #nav a {
@@ -40,5 +38,9 @@ export default {
 
 body {
   background: #1b4332;
+}
+
+@media screen and (max-width: 700px) {
+    
 }
 </style>
