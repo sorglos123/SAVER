@@ -41,7 +41,7 @@ module.exports = {
             await r.uploadReceipt(req.body.uid, req.file["path"], req.body.supermarket, req.body.date, req.body.total); 
            
             return res.status(200).send({
-                message: "Success"
+                message: "Der Beleg wurde erfolgreich hochgeladen"
             })
         } catch (error) {
             console.log(error);

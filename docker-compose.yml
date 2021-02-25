@@ -23,7 +23,7 @@ services:
     ports:
       - 4001:4001
     volumes:
-      - .images:/images
+      - images:/images
       - ./server/src/controllers:/app/src/controllers
       - ./server/src/dblogic:/app/src/dblogic
      
