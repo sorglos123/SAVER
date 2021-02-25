@@ -1,18 +1,10 @@
 import * as EmailValidator from 'email-validator';
+import { User } from "../dblogic/user";
 
 const config = require('../config/config');
-import { User } from "../dblogic/user";
 
 module.exports = {
     async updateUser(req, res) {
-        /* Konsolen-Ausgaben nur für Testzwecke */
-        console.log('Benutzername: ' + req.body.username);
-        console.log('E-Mail: ' + req.body.email);
-        console.log('Altes Passwort: ' + req.body.oldpw);
-        console.log('Neues Passwort: ' + req.body.newpw);
-        console.log('Neuew Passwort bestätigen: ' + req.body.confirm);
-        console.log('User ID ' + req.body.uid);
-
         //mögliche Fälle: Ändern Benutzername; erforderliche Eingabe: Benutzername + altes Passwort
 
         //ändern PW: altes PW + neues PW
@@ -22,7 +14,6 @@ module.exports = {
                 return res.status(400).send({
                     error: 'Ihr neues Passwort darf nicht mit dem bisherigen Passwort übereinstimmen.'
                 });
-
             }
             else if (req.body.newpw != req.body.confirm) {
                 return res.status(400).send({
@@ -49,11 +40,8 @@ module.exports = {
                             error: "Passwort konnte nicht aktualsiert werden"
                         })
                     }
-
                 }
-
             }
-
         }
         //ändern EMail: email + altes PW
         else if ((req.body.uid != '') && (req.body.username == '') && (req.body.email != '') && (req.body.oldpw != '') && (req.body.newpw == '') && (req.body.confirm == '')) {
@@ -65,7 +53,6 @@ module.exports = {
                     return res.status(200).send({
                         message: "Die E-Mail Adresse wurde erfolgreich aktualisiert"
                     })
-
                 } catch (error) {
                     console.log(error);
                     if (error.message == "Incorrect User/PW") {
@@ -82,15 +69,12 @@ module.exports = {
                         return res.status(400).send({
                             error: "Etwas ist schief gegangen."
                         })
-
                     }
-
                 }
             } else {
                 return res.status(400).send({
                     error: 'Bitte geben Sie eine gültige E-Mail-Adresse an.'
                 });
-
             }
         }
         //ändern Username: username + altes PW
@@ -118,7 +102,6 @@ module.exports = {
                     return res.status(400).send({
                         error: "Etwas ist schief gegangen."
                     })
-
                 }
             }
         }
@@ -144,7 +127,6 @@ module.exports = {
                     return res.status(200).send({
                         message: "Die E-Mail Adresse und das Passwort wurden erfolgreich aktualisiert"
                     })
-
                 } catch (error) {
                     if (error.message == "Incorrect User/PW") {
                         return res.status(400).send({
@@ -168,7 +150,6 @@ module.exports = {
                     error: 'Das sollte nicht passeren.'
                 });
             }
-
         }
 
         //ändern Username + pw: username + altes pw + neues pw
@@ -192,7 +173,6 @@ module.exports = {
                     return res.status(200).send({
                         message: "Die E-Mail Adresse und das Passwort wurden erfolgreich aktualisiert"
                     })
-
                 } catch (error) {
                     if (error.message == "Incorrect User/PW") {
                         return res.status(400).send({
@@ -248,7 +228,6 @@ module.exports = {
                         });
                     }
                 }
-
             }
         }
         //ändern username und email und pw: email + username + altes pw + neues pw
@@ -294,7 +273,6 @@ module.exports = {
                         error: 'Das sollte nicht passeren.'
                     });
                 }
-
             }
         }
     }

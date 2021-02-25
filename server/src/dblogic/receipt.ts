@@ -1,4 +1,5 @@
 import * as mariadb from 'mariadb';
+
 const pool = mariadb.createPool({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: process.env.DB, connectionLimit: 5 });
 
 export class Item {
@@ -15,7 +16,6 @@ export class Item {
         this.category = category;
         this.volume = volume;
     }
-
 }
 
 export async function getDates(uid: number) {
@@ -79,9 +79,7 @@ export async function getUserReceipts(uid: number) {
                 throw new Error("no dates");
             }
             else {
-
                 return res;
-
             }
 
         } catch (error) {
@@ -93,7 +91,6 @@ export async function getUserReceipts(uid: number) {
                 conn.end();
             }
         }
-
     };
 
     export async function getItems(receipts: any) {
@@ -111,9 +108,7 @@ export async function getUserReceipts(uid: number) {
             WHERE receipt_id = ?;", recId);
                 for (let index = 0; index < res.length; index++) {
                     items.push(new Item(res[index]["receipt_id"], res[index]["product_name"], res[index]["price"], res[index]["category"], res[index]["volume"]));
-
                 }
-
             }
             return items;
         } catch (error) {
@@ -123,8 +118,5 @@ export async function getUserReceipts(uid: number) {
             if (conn != null) {
                 conn.end();
             }
-
-
         }
     };
-
