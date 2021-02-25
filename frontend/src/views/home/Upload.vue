@@ -60,18 +60,19 @@ export default {
     async uploadReceipt() {
       try {
         var formdata = new FormData();
-        formdata.append('receiptImage', this.selectedFile, this.selectedFile.name);
-        console.log(formdata);
-        console.log(formdata.has('receiptImage'));        
+        formdata.append('receipt', this.selectedFile, this.selectedFile.name);
+        formdata.append('total', this.value);
+        formdata.append('supermarket', this.store);
+        formdata.append('date', this.date);
+        formdata.append('uid', this.$store.state.userID);  
+
         const response = await UploadService.uploadReceiptData({
-          date: this.date,
-          store: this.store,
-          value: this.value,
-          // formData enthält das vom Benutzer hochgeladene Bild
-          formData: formdata,
-          uid: this.$store.state.userID
+          file: formdata,
         });
-        console.log(response);
+
+        if(response) {
+          this.error = response.data.message;
+        }
       } catch(error) {
         this.error = error.response.data.error;
       }
