@@ -1,15 +1,15 @@
 <template>
   <div class="main">
     <section class="glass">
-      <form>
+      <form id="formular">
         <br> <h1> Persönliche Daten ändern </h1> <br>
-        <input type="text" name="username" v-model="username" autocomplete="off" placeholder="Benutzername"><br><br>
+        <input type="text" name="username" id="username" v-model="username" autocomplete="off" placeholder="Benutzername"><br><br>
         <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
-        <input type="password" name="oldpw" v-model="passwd" placeholder="Aktuelles Passwort"><br><br>
-        <input type="password" name="newpw" v-model="confirm" placeholder="Neues Passwort"><br><br>
+        <input type="password" name="oldpw" v-model="oldpw" placeholder="Aktuelles Passwort"><br><br>
+        <input type="password" name="newpw" v-model="newpw" placeholder="Neues Passwort"><br><br>
         <input type="password" name="confirm" v-model="confirm" placeholder="Neues Passwort bestätigen"><br><br>
         <br> <div class="error" v-html="error"></div> <br>
-        <button class="button" @click="update()">Abschicken</button>
+        <button class="button" @click="update()" type="button">Abschicken</button>
       </form>
     </section>
     <div class="circle1"></div>
@@ -29,7 +29,7 @@ export default {
       oldpw: '',
       newpw: '',
       confirm: '',
-      userID: '',
+      uid: '',
       error: null
     }
   },
@@ -44,13 +44,11 @@ export default {
           confirm: this.confirm,
           uid: this.$store.state.userID
         });
-        console.log(response);
-        // Hier positive Nachricht ausgeben:
-        // if(response) {
-        // this.error = 'Ihre Benutzerdaten wurden erfolgreich geändert.';
-        // }
+        if(response) {
+          this.error = response.data.message;
+        }
       } catch(error) {
-        this.error = error.response.data.error;
+        this.error = error.data.message;
       }
     }
   }
@@ -136,8 +134,38 @@ export default {
 
 .error {
   border-color: red;
-  color: red;
+  color: green;
   z-index: 3;
+}
+
+@media screen and (max-width: 700px) {
+  .glass {
+    width: 80%;
+  }
+
+  .circle1 {
+    width: 10rem;
+    height: 10rem;
+    bottom: 1%;
+    left: 55%;
+    z-index: 2;
+  }
+
+  .circle2 {
+    width: 16rem;
+    height: 16rem;
+    top: 38%;
+    left: 25%;
+    z-index: 2;
+  }
+
+  .circle3 {
+    width: 11rem;
+    height: 11rem;
+    top: 10%;
+    left: 55%;
+    z-index: 2;
+  }
 }
 
 </style>

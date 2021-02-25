@@ -2,17 +2,27 @@
     <div class="main">
       <section class="glass">
         <div class="form">
-          <input type="file" @change="preview" id="receipt" name="receipt" accept="image/png, image/jpeg, .pdf">
-            <button class="button" type="button" @click="displayProperties"> Beleg hochladen </button> <br>
+          <input 
+            style="display: none" 
+            type="file" 
+            @change="preview" 
+            id="receipt" 
+            name="receipt" 
+            accept="image/png, image/jpeg, .pdf"
+            ref="fileInput">
+            <label for="choose_button"> Bitte wählen Sie eine Datei zum Hochladen aus: </label> <br>
+            <button class="button" name="choose_button" type="button" @click="$refs.fileInput.click()"> Datei auswählen </button> <br>
+            <label for="upload_button"> Danach können Sie den Beleg hochladen: </label> <br>
+            <button class="button" name="upload_button" type="button" @click="displayProperties(); uploadReceipt()"> Beleg hochladen </button> <br>
             <br> <div class="error" v-html="error"></div> <br>
-            <label for="receipt_date"> Belegdatum: </label>
+            <label for="receipt_date"> Belegdatum: </label> <br>
             <input type="text" v-model="date" name="receipt_date" id="receipt_date" placeholder="Belegdatum"><br><br>
-            <label for="receipt_store"> Verkaufsstelle: </label>
+            <label for="receipt_store"> Verkaufsstelle: </label> <br>
             <input type="text" v-model="store" name="receipt_store" id="receipt_store" placeholder="Verkaufsstelle"><br><br>
-            <label for="receipt_value"> Belegsumme: </label>
-            <input type="text" v-model="value" name="receipt_value" id="receipt_value" placeholder="Belegsumme"><br><br>
+            <label for="receipt_value"> Belegsumme: </label> <br>
+            <input type="text" v-model="value" name="receipt_value" id="receipt_value" placeholder="Belegsumme"> <br> <br>
         </div>
-        <div class="preview" id="preview">
+        <div class="full-preview" id="preview">
           <img class="fit" v-if="url" :src="url" />
         </div>
       </section>
@@ -24,19 +34,21 @@
 </template>
 
 <script>
-
+import UploadService from '@/services/UploadService'
 export default {
   data () {
     return {
       url: null,
       date: '',
       store: '',
-      value: '',
+      value: 0,
+      selectedFile: null,
       error: null
     }
   },
   methods: {
     preview(e) {
+      this.selectedFile = e.target.files[0];
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file);
     },
@@ -44,6 +56,26 @@ export default {
       console.log(this.date);
       console.log(this.store);
       console.log(this.value);
+    },
+    async uploadReceipt() {
+      try {
+        var formdata = new FormData();
+        formdata.append('receipt', this.selectedFile, this.selectedFile.name);
+        formdata.append('total', this.value);
+        formdata.append('supermarket', this.store);
+        formdata.append('date', this.date);
+        formdata.append('uid', this.$store.state.userID);  
+
+        const response = await UploadService.uploadReceiptData({
+          file: formdata,
+        });
+
+        if(response) {
+          this.error = response.data.message;
+        }
+      } catch(error) {
+        this.error = error.response.data.error;
+      }
     }
   }
 }
@@ -72,8 +104,7 @@ export default {
 
 .glass {
   min-height: 65vh;
-  min-width: 80vh;
-  width: 60%;
+  width: 80%;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   border-radius: 2rem;
   z-index: 3;
@@ -82,16 +113,21 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
 }
 
-.preview {
+.full-preview {
   flex: 2;
   height: 60vh;
   width: auto;
+  margin: 5px;
 }
 
 .form {
   flex: 1;
+  height: auto;
+  width: 100%;
+  margin: 5px;
 }
 
 .fit {
@@ -143,7 +179,7 @@ export default {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bolder;
   margin: 4px 2px;
   cursor: pointer;
@@ -158,6 +194,56 @@ button a {
   border-color: red;
   color: red;
   z-index: 3;
+}
+
+@media screen and (max-width: 700px) {  
+  .glass {
+    flex-direction: column;
+  }
+
+  .form {
+    width: 90%;
+    height: auto;
+    margin-top: 10px;
+  }
+
+  .button {
+    padding: 7.5px 16px;
+    font-size: 12px;
+  }
+
+  .fit {
+    object-fit: fill; /* image is resized to fill the given dimension. If necessary, the image will be stretched or squished to fit */
+    /* object-fit: contain; /* image keeps its aspect ratio, but is resized to fit within the given dimension */
+    /* object-fit: cover; /*   image keeps its aspect ratio and fills the given dimension. The image will be clipped to fit */ 
+    /* object-fit: scale-down; /* the image is scaled down to the smallest version of none or contain */
+    height: 80%;
+    width: auto;
+  }
+  
+  .circle1 {
+    width: 10rem;
+    height: 10rem;
+    bottom: 1%;
+    left: 55%;
+    z-index: 2;
+  }
+
+  .circle2 {
+    width: 16rem;
+    height: 16rem;
+    top: 38%;
+    left: 25%;
+    z-index: 2;
+  }
+
+  .circle3 {
+    width: 11rem;
+    height: 11rem;
+    top: 10%;
+    left: 55%;
+    z-index: 2;
+  }
 }
 
 </style>

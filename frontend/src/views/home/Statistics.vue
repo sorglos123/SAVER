@@ -235,4 +235,35 @@ button a {
   z-index: 3;
 }
 
+@media screen and (max-width: 700px) {
+  .glass {
+    width: 80%;
+    flex-direction: column;
+  }
+
+  .circle1 {
+    width: 10rem;
+    height: 10rem;
+    bottom: 1%;
+    left: 55%;
+    z-index: 2;
+  }
+
+  .circle2 {
+    width: 16rem;
+    height: 16rem;
+    top: 38%;
+    left: 25%;
+    z-index: 2;
+  }
+
+  .circle3 {
+    width: 11rem;
+    height: 11rem;
+    top: 10%;
+    left: 55%;
+    z-index: 2;
+  }
+}
+
 </style>

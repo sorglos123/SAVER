@@ -1,74 +1,129 @@
 <template>
     <div class="main">
-        <div class="glass">
-                <div class="card">
-                    <div class="icon"> 
-                        <div class="fill1"> 
-                        </div>
-                    </div>
-                    <div class="link">
-                      <button class="button" @click="navigateTo('/receipts')" type="button"> Meine Belege </button>
-                      <!-- <button class="button">
-                            <router-link to="/receipts"> Meine Belege </router-link>
-                        </button> -->
-                        <div class="text"> 
-                            <p> Übersicht über meine hochgeladenen Belege </p>
-                        </div>
-                    </div> 
+      <div class="upper">
+        <div class="upper-left">
+           <div class="glass">
+              <div class="card">
+                <div class="icon"> 
+                  <div class="fill1"> 
+                  </div>
                 </div>
-        </div>
-        <div class="glass">
-                <div class="card">
-                    <div class="icon"> 
-                        <div class="fill3"> 
-                        </div>
-                    </div>
-                    <div class="link">
-                      <button class="button" @click="navigateTo('/calendar')" type="button"> Mein Kalender </button>
-                      <!-- <button class="button">
-                            <router-link to="/calendar"> Mein Kalender </router-link>
-                        </button> -->
-                        <div class="text"> 
-                            <p> Kalendarische Übersicht </p>
-                        </div>
-                    </div> 
-                    
+                <div class="link">
+                  <button class="button" @click="navigateTo('/receipts')" type="button"> Meine Belege </button>
+                  <div class="text"> 
+                    <p> Übersicht über meine hochgeladenen Belege </p>
+                  </div>
+                </div> 
+              </div>
+          </div>
+          <div class="glass">
+            <div class="card">
+              <div class="icon"> 
+                  <div class="fill3"> 
+                  </div>
+              </div>
+              <div class="link">
+                <button class="button" @click="navigateTo('/calendar')" type="button"> Mein Kalender </button>
+                <div class="text"> 
+                  <p> Kalendarische Übersicht </p>
                 </div>
+              </div> 
+            </div>
+          </div>
         </div>
-        <div class="glass">
-                <div class="card">
-                    <div class="icon"> 
-                        <div class="fill2"> 
-                        </div>
-                    </div>
-                    <div class="link">
-                      <button class="button" @click="navigateTo('/statistics')" type="button"> Meine Statistiken </button>
-                      <!-- <button class="button">
-                            <router-link to="/statistics"> Meine Statistiken </router-link>
-                        </button> -->
-                        <div class="text"> 
-                            <p> Aufbereitung meiner Belegdaten </p>
-                        </div>
-                    </div> 
+        <div class="upper-right">
+          <div class="glass">
+            <div class="card">
+              <div class="icon"> 
+                <div class="fill2"> 
                 </div>
-        </div>
-        <div class="glass">
-                <div class="card">
-                    <div class="icon"> 
-                        <div class="fill4"> 
-                        </div>
-                    </div>
-                    <div class="link">
-                      <button class="button" @click="navigateTo('/user')" type="button"> Meine Benutzerdaten </button>
-                      <!-- <button class="button">
-                            <router-link to="/user"> Meine Benutzerdaten </router-link>
-                        </button> -->
-                        <div class="text"> 
-                            <p> Änderung meiner persönlichen Daten </p>
-                        </div>
-                    </div> 
+              </div>
+              <div class="link">
+                <button class="button" @click="navigateTo('/statistics')" type="button"> Meine Statistiken </button>   
+                <div class="text"> 
+                  <p> Aufbereitung meiner Belegdaten </p>
                 </div>
+              </div> 
+            </div>
+          </div>
+          <div class="glass">
+            <div class="card">
+              <div class="icon"> 
+                <div class="fill4"> 
+                </div>
+              </div>
+              <div class="link">
+                <button class="button" @click="navigateTo('/user')" type="button"> Meine Benutzerdaten </button>   
+                <div class="text"> 
+                  <p> Änderung meiner persönlichen Daten </p>
+                </div>
+              </div> 
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="lower">
+         <div class="lower-left">
+          <div class="glass">
+            <div class="card">
+              <div class="icon"> 
+                <div class="fill2"> 
+                </div>
+              </div>
+              <div class="link">
+                <button class="button" @click="navigateTo('/statistics')" type="button"> Meine Statistiken </button>   
+                <div class="text"> 
+                  <p> Aufbereitung meiner Belegdaten </p>
+                </div>
+              </div> 
+            </div>
+          </div>
+          <div class="glass">
+            <div class="card">
+              <div class="icon"> 
+                <div class="fill4"> 
+                </div>
+              </div>
+              <div class="link">
+                <button class="button" @click="navigateTo('/user')" type="button"> Meine Benutzerdaten </button>   
+                <div class="text"> 
+                  <p> Änderung meiner persönlichen Daten </p>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+        <div class="lower-right">
+           <div class="glass">
+              <div class="card">
+                <div class="icon"> 
+                  <div class="fill1"> 
+                  </div>
+                </div>
+                <div class="link">
+                  <button class="button" @click="navigateTo('/receipts')" type="button"> Meine Belege </button>
+                  <div class="text"> 
+                    <p> Übersicht über meine hochgeladenen Belege </p>
+                  </div>
+                </div> 
+              </div>
+          </div>
+          <div class="glass">
+            <div class="card">
+              <div class="icon"> 
+                  <div class="fill3"> 
+                  </div>
+              </div>
+              <div class="link">
+                <button class="button" @click="navigateTo('/calendar')" type="button"> Mein Kalender </button>
+                <div class="text"> 
+                  <p> Kalendarische Übersicht </p>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
         <div class="circle1"></div>
         <div class="circle2"></div>
         <div class="circle3"></div>
@@ -97,15 +152,50 @@ export default {
 
 .main {
   height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
   border-radius: 20px;
 }
 
+.upper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upper-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upper-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lower {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.lower-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lower-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .glass {
-  height: 300px;
-  width: 200px;
+  height: 250px;
+  width: 170px;
   background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   border-radius: 2rem;
   z-index: 3;
@@ -159,15 +249,18 @@ export default {
 }
 
 .link {
-    flex: 2;
-    padding: 30px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+  padding: 30px 0px;
 }
 
 .text {
     flex: 2;
     padding: 15px 0px;
     position: absolute;
-    top: 65%;
+    top: 70%;
     right: 5%;
     left: 5%;
 }
@@ -235,19 +328,107 @@ button a {
 
 @media screen and (max-width: 700px) {
   .glass {
-    height: 150px;
-    width: 100px;
-    background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    height: 200px;
+    width: 120px;
     border-radius: 2rem;
-    z-index: 3;
-    backdrop-filter: blur(2rem);
-    color: #1b4332;
+    margin: 2.5px;
+    margin-top: 50px;
+  }
+
+  .card {
+    height: 100%;
+    width: 100%;
+  }
+
+  .icon { 
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 5px;
-    margin-top: 100px;
-}
+    flex: 4;
+    height: auto;
+    width: 100%;
+    border-radius: 2rem 2rem 0rem 0rem; 
+  }
+
+  .fill1, .fill2, .fill3, .fill4 {
+    height: 70px;
+    width: 100%;
+  }
+
+  .link {
+    flex: 6;
+    padding: 5px 0px;
+  }
+
+  .text {
+    display: none;
+  }
+
+  .upper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .upper-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .upper-right {
+    display: none;
+  }
+
+  .lower {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lower-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lower-right {
+    display: none;
+  }
+
+  .icon { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 4;
+    height: auto;
+    width: 100%;
+    border-radius: 2rem 2rem 0rem 0rem; 
+  }
+
+  .circle1 {
+    width: 10rem;
+    height: 10rem;
+    bottom: 1%;
+    left: 55%;
+    z-index: 2;
+  }
+
+  .circle2 {
+    width: 16rem;
+    height: 16rem;
+    top: 38%;
+    left: 25%;
+    z-index: 2;
+  }
+
+  .circle3 {
+    width: 11rem;
+    height: 11rem;
+    top: 10%;
+    left: 55%;
+    z-index: 2;
+  }
 }
 
 </style>
