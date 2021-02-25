@@ -23,17 +23,20 @@ services:
     ports:
       - 4001:4001
     volumes:
+      - images:/images
       - ./server/src/controllers:/app/src/controllers
       - ./server/src/dblogic:/app/src/dblogic
      
-
-  vue:
-    build: './frontend'
-    restart: always
-    ports:
-      - 8080:8080
+#  vue:
+#    build: './frontend'
+#    restart: always
+#    ports:
+#      - 8080:8080
+#    
   
 
 volumes:
   mariaSQL_01:
+    external: true
+  images:
     external: true

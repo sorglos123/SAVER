@@ -37,5 +37,25 @@ module.exports = {
         //response: per Receipt: Receipt ID, Date & Time, Supermarket, Total Value, n-Items (name + volume + category + price)
 
         //indivudal response: overview Receipt + Individual Items
+    },
+    async uploadReceipt(req, res){
+        try {
+            console.log(req.file["path"]); 
+            console.log(req.body.total);
+            console.log(req.body.date);
+            console.log(req.body.supermarket);
+            await r.uploadReceipt(req.body.uid, req.file["path"], req.body.supermarket, req.body.date, req.body.total); 
+           
+            return res.status(200).send({
+                message: "Der Beleg wurde erfolgreich hochgeladen"
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({
+                error: "irgendwas ist schief gegangen"
+            })
+        }
+        
+        //  files in req.files ; body in req.body
     }
 }

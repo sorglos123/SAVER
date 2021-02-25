@@ -252,6 +252,7 @@ module.exports = {
                 const c = new User(req.body.username, req.body.oldpw, req.body.email, req.body.uid);
                 await c.updateEmail();
                 await c.updateUserName();
+                
                 await c.updateUserPW(req.body.newpw);
                 return res.status(200).send({
                     message: "Die E-Mail Adresse, Benutzername und Passwort wurden erfolgreich aktualisiert"

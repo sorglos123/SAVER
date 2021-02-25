@@ -2,6 +2,8 @@ const StatusController = require('./controllers/StatusController');
 const AuthenticationController = require('./controllers/AuthenticationController');
 const UpdateController = require('./controllers/UpdateController');
 const ReceiptController = require('./controllers/ReceiptController');
+import * as multer from 'multer';
+const upload = multer({ dest: '../../images' });
 
 module.exports = (app) => {
     /* Route 0: Status */
@@ -24,5 +26,9 @@ module.exports = (app) => {
 
     /* Route 6: Get a calendar dates for a specific date */
     app.post('/updatecalender', ReceiptController.getDates);
+
+    /* Route 5: Get a calendar dates for a specific date */
+    app.put('/uploadReceipt',upload.single('receipt'), ReceiptController.uploadReceipt);
+
 
 }

@@ -2,6 +2,7 @@ import * as mariadb from 'mariadb';
 import * as prmise from "bluebird";
 
 const bcrypt = prmise.promisifyAll(require("bcrypt-nodejs"));
+
 const pool = mariadb.createPool({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: process.env.DB, connectionLimit: 10 });
 
 class User {
@@ -108,11 +109,12 @@ class User {
         }
     }
     async updateUserPW(newPW: string) {
+        await this.checkUserPW();
+        this.password = newPW;
+        await hashPW(this);
         var conn;
         try {
-            await this.checkUserPW();
-            this.password = newPW;
-            await hashPW(this);
+            
             conn = await pool.getConnection();
             const res = await conn.query("UPDATE users SET password = ? WHERE user_id = ?;", [this.password, this.user_id]);
         } catch (error) {
