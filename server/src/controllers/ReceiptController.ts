@@ -34,8 +34,12 @@ module.exports = {
     },
     async uploadReceipt(req, res){
         try {
-            
-            
+            console.log(req.file["path"]); 
+            console.log(req.body.total);
+            console.log(req.body.date);
+            console.log(req.body.supermarket);
+            await r.uploadReceipt(req.body.uid, req.file["path"], req.body.supermarket, req.body.date, req.body.total); 
+           
             return res.status(200).send({
                 message: "Success"
             })

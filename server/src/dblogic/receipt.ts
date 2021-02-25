@@ -125,9 +125,23 @@ export async function getItems(receipts: any) {
     }
 }
 
-export async function  uploadReceipt() {
-   
-    
-
+export async function  uploadReceipt(uid: number,filepath: string, supermarket: string, date: string, total: number) {
+    var conn;
+    let re = /\./gi;
+    let dateformat = "%d-%m-%Y";
+    console.log("Insert receipt into db");
+    var date_sql_friendly = date.replace(re, "-");
+    try {
+        conn = await pool.getConnection();
+        const res = await conn.query("INSERT INTO receipts(user_id, total_value, receipt_date, supermarket, image_file_path) \
+        VALUES (?, ?, (STR_TO_DATE(?, ?)), ?, ?)", [uid, total, date_sql_friendly, dateformat, supermarket, filepath] ); 
+        console.log("success"); 
+    } catch (error) {
+        console.log(error);
+    } finally{
+        if (conn != null) {
+            conn.end();
+        }
+    }
 };
 
