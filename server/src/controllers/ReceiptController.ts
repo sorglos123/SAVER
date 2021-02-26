@@ -61,7 +61,7 @@ module.exports = {
     },
     async testUpload(req, res){
         try {
-            console.log(req.body.file["path"]); 
+            console.log(req.file["path"]); 
             console.log(req.body.total);
             console.log(req.body.date);
             console.log(req.body.supermarket);
