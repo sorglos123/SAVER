@@ -8,7 +8,7 @@
           <input type="text" name="email" v-model="email" autocomplete="off" placeholder="E-Mail-Adresse"><br><br>
           <input type="password" name="passwd" v-model="passwd" placeholder="Passwort"><br><br>
           <input type="password" name="confirm" v-model="confirm" placeholder="Passwort bestätigen"><br><br>
-          <br> <div class="error" v-html="error"></div> <br>
+          <br> <div class="error" v-html="error" id="error"></div> <br>
           <button class="button" @click="register" type="button">Registrierung abschließen</button>
         </form>
       </section>

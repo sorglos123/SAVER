@@ -8,7 +8,7 @@
         <input type="password" name="oldpw" v-model="oldpw" placeholder="Aktuelles Passwort"><br><br>
         <input type="password" name="newpw" v-model="newpw" placeholder="Neues Passwort"><br><br>
         <input type="password" name="confirm" v-model="confirm" placeholder="Neues Passwort bestätigen"><br><br>
-        <br> <div class="error" v-html="error"></div> <br>
+        <br> <div class="error" v-html="error" id="error"></div> <br>
         <button class="button" @click="update()" type="button">Abschicken</button>
       </form>
     </section>
