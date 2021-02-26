@@ -128,7 +128,7 @@ export async function getItems(receipts: any) {
     }
 };
 
-export async function uploadReceipt(uid: number,filepath: string, supermarket: string, date: string, total: number) {
+export async function uploadReceipt(uid: number,filepath: string, supermarket: string, date: string, total: string) {
     var conn;
     let re_date = /\./gi;
     let re_total = /\,/gi;
