@@ -130,13 +130,16 @@ export async function getItems(receipts: any) {
 
 export async function uploadReceipt(uid: number,filepath: string, supermarket: string, date: string, total: number) {
     var conn;
-    let re = /\./gi;
+    let re_date = /\./gi;
+    let re_total = /\,/gi;
     let dateformat = "%d-%m-%Y";
-    var date_sql_friendly = date.replace(re, "-");
+    console.log("Insert receipt into db");
+    var date_sql_friendly = date.replace(re_date, "-");
+    var total_sql_friendly = total.replace(re_total, "."); 
     try {
         conn = await pool.getConnection();
         const res = await conn.query("INSERT INTO receipts(user_id, total_value, receipt_date, supermarket, image_file_path) \
-        VALUES (?, ?, (STR_TO_DATE(?, ?)), ?, ?)", [uid, total, date_sql_friendly, dateformat, supermarket, filepath] ); 
+        VALUES (?, ?, (STR_TO_DATE(?, ?)), ?, ?)", [uid, total_sql_friendly, date_sql_friendly, dateformat, supermarket, filepath] ); 
         console.log("success"); 
     } catch (error) {
         console.log(error);
