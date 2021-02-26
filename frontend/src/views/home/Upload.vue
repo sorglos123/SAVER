@@ -14,7 +14,7 @@
             <label for="choose_button"> Bitte wählen Sie eine Datei zum Hochladen aus: </label> <br>
             <button class="button" name="choose_button" type="button" @click="$refs.fileInput.click()"> Datei auswählen </button> <br>
             <label for="upload_button"> Danach können Sie den Beleg hochladen: </label> <br>
-            <button class="button" name="upload_button" type="button" @click="displayProperties(); uploadReceipt()"> Beleg hochladen </button> <br>
+            <button class="button" name="upload_button" type="button" @click="uploadReceipt()"> Beleg hochladen </button> <br>
             <br> <div class="error" v-html="error"></div> <br>
             <label for="receipt_date"> Belegdatum: </label> <br>
             <input type="text" v-model="date" name="receipt_date" id="receipt_date" placeholder="Belegdatum"><br><br>
@@ -49,15 +49,10 @@ export default {
     }
   },
   methods: {
-    preview(e) {
-      this.selectedFile = e.target.files[0];
-      const file = e.target.files[0];
+    preview(event) {
+      this.selectedFile = event.target.files[0];
+      const file = event.target.files[0];
       this.url = URL.createObjectURL(file);
-    },
-    displayProperties() {
-      console.log(this.date);
-      console.log(this.store);
-      console.log(this.value);
     },
     async uploadReceipt() {
       try {
