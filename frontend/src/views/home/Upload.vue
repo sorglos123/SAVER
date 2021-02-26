@@ -14,7 +14,7 @@
             <label for="choose_button"> Bitte wählen Sie eine Datei zum Hochladen aus: </label> <br>
             <button class="button" name="choose_button" type="button" @click="$refs.fileInput.click()"> Datei auswählen </button> <br>
             <label for="upload_button"> Danach können Sie den Beleg hochladen: </label> <br>
-            <button class="button" name="upload_button" @click="uploadReceipt()"> Beleg hochladen </button> <br>
+            <button type="button" class="button" name="upload_button" @click="uploadReceipt()"> Beleg hochladen </button> <br>
             <br> <div class="error" v-html="error" id="error"></div> <br>
             <label for="receipt_date"> Belegdatum: </label> <br>
             <input type="text" v-model="date" name="receipt_date" id="receipt_date" placeholder="Belegdatum"><br><br>
