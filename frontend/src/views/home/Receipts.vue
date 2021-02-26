@@ -26,7 +26,6 @@
                   <label for="more">Mehr als</label> <br>
                   <input class="input" type="text" name="filter_value" v-model="filter_value" autocomplete="off" placeholder="Belegsumme"> Euro <br>
                 </div> <br>
-              <!-- <button class="button" @click="filterListBy(filter_criterion, filter_store, choice, filter_value)">Belege durchsuchen</button> <br> -->
                 <button class="button" @click="filterList()" type="button">Belege durchsuchen</button> <br>
             </div>
             <div class="sort">
@@ -34,16 +33,15 @@
               <input type="radio" id="store_search" value="Verkaufsstelle" v-model="search_criterion"> <br>
               <label for="store">Verkaufsstelle</label> <br>
               <input type="radio" id="value_search" value="Belegsumme" v-model="search_criterion"> <br>
-              <label for="value">Belegsumme</label> <br> <br>
+              <label for="value">Belegsumme</label> <br>
+              <input type="radio" id="date_search" value="Belegdatum" v-model="search_criterion"> <br>
+              <label for="value">Belegdatum</label> <br> <br>
               <button class="button" @click="sortList()" type="button">Belege sortieren</button> <br>
             </div>
           </div>
           <button class="button" @click="deleteReceipts(); getReceipts()" type="button">Belege anzeigen / Filter zurücksetzen</button> <br>
         </div>
         <div class="window">
-          <!-- Dieses div reagiert aktuell auf den File-Upload! Allerdings soll es ja auf die Filterung/
-          Sortierung reagieren, das muss noch angepasst werden. -->
-          <!-- Zugriff auf die verschiedenen v-models per {{ selectedFile.name }} oder {{ filter_criterion }} -->
           <div class="receiptlist"
             v-for="receipt in receipts"
             :key="receipt.id"
@@ -164,11 +162,32 @@ export default {
       }
       return 0;
     },
+    sortByDate(a,b) {
+      var a_dateElements = a.receiptDate.split('.');
+      var b_dateElements = b.receiptDate.split('.');
+      if ( a_dateElements[2] < b_dateElements[2] ) {
+        return -1;
+      } else if ( (a_dateElements[2] == b_dateElements[2]) && (a_dateElements[1] < b_dateElements[1]) ) {
+        return -1;
+      } else if ( (a_dateElements[2] == b_dateElements[2]) && (a_dateElements[1] == b_dateElements[1]) && (a_dateElements[0] < b_dateElements[0]) ) {
+        return -1;
+      }
+      if ( a_dateElements[2] > b_dateElements[2] ) {
+        return 1;
+      } else if ( (a_dateElements[2] == b_dateElements[2]) && (a_dateElements[1] > b_dateElements[1]) ) {
+        return 1;
+      } else if ( (a_dateElements[2] == b_dateElements[2]) && (a_dateElements[1] == b_dateElements[1]) && (a_dateElements[0] > b_dateElements[0]) ) {
+        return 1;
+      }
+      return 0;
+    },
     sortList() {
       if(this.search_criterion === 'Verkaufsstelle') {
         this.receipts = this.receipts.sort(this.sortByStore);
       } else if(this.search_criterion === 'Belegsumme') {
         this.receipts = this.receipts.sort(this.sortByValue);
+      } else if(this.search_criterion === 'Belegdatum') {
+        this.receipts = this.receipts.sort(this.sortByDate);
       }
     },
     formatEnglishCurrencyGerman(currency) {
@@ -391,6 +410,10 @@ button a {
     flex: 1;
     width: 100%;
     height: auto;
+  }
+
+  .filter {
+    flex: 1;
   }
 
   .input {
