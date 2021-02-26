@@ -45,6 +45,7 @@ export default {
           uid: this.$store.state.userID
         });
         if(response) {
+          document.getElementById('error').style.color = 'green';
           this.error = response.data.message;
         }
       } catch(error) {
@@ -133,8 +134,7 @@ export default {
 }
 
 .error {
-  border-color: red;
-  color: green;
+  color: red;
   z-index: 3;
 }
 

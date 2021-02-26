@@ -71,6 +71,7 @@ export default {
         const response = await UploadService.uploadReceiptData(formdata);
 
         if(response) {
+          document.getElementById('error').style.color = 'green';
           this.error = response.data.message;
         }
       } catch(error) {
@@ -191,7 +192,6 @@ button a {
 }
 
 .error {
-  border-color: red;
   color: red;
   z-index: 3;
 }

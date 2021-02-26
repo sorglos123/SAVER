@@ -40,6 +40,7 @@ export default {
           confirm: this.confirm
         });
         if(response) {
+          document.getElementById('error').style.color = 'green';
           const user = response.data.user.email;
           this.error = 'Willkommen ' + user + '! Ihre Registrierung war erfolgreich. Sie können sich jetzt einloggen.';
         }
@@ -116,7 +117,6 @@ main {
 }
 
 .error {
-  border-color: red;
   color: red;
   z-index: 3;
 }
