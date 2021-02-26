@@ -18,8 +18,13 @@
             <br> <div class="error" v-html="error"></div> <br>
             <label for="receipt_date"> Belegdatum: </label> <br>
             <input type="text" v-model="date" name="receipt_date" id="receipt_date" placeholder="Belegdatum"><br><br>
-            <label for="receipt_store"> Verkaufsstelle: </label> <br>
-            <input type="text" v-model="store" name="receipt_store" id="receipt_store" placeholder="Verkaufsstelle"><br><br>
+            <label for="receipt_store">Verkaufsstelle: </label> <br>
+            <select v-model="store" name="receipt_store" id="receipt_store" placeholder="Verkaufsstelle">
+              <option value="Aldi">Aldi</option>
+              <option value="Kaufland">Kaufland</option>
+              <option value="Lidl">Lidl</option>
+              <option value="Rewe">Rewe</option>
+            </select> <br><br>
             <label for="receipt_value"> Belegsumme: </label> <br>
             <input type="text" v-model="value" name="receipt_value" id="receipt_value" placeholder="Belegsumme"> <br> <br>
           </form>
