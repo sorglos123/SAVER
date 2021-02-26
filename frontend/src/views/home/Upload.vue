@@ -2,6 +2,7 @@
     <div class="main">
       <section class="glass">
         <div class="form">
+          <form enctype="multipart/form-data">
           <input 
             style="display: none" 
             type="file" 
@@ -21,6 +22,7 @@
             <input type="text" v-model="store" name="receipt_store" id="receipt_store" placeholder="Verkaufsstelle"><br><br>
             <label for="receipt_value"> Belegsumme: </label> <br>
             <input type="text" v-model="value" name="receipt_value" id="receipt_value" placeholder="Belegsumme"> <br> <br>
+          </form>
         </div>
         <div class="full-preview" id="preview">
           <img class="fit" v-if="url" :src="url" />
@@ -60,15 +62,13 @@ export default {
     async uploadReceipt() {
       try {
         var formdata = new FormData();
-        formdata.append('receipt', this.selectedFile, this.selectedFile.name);
+        formdata.append('receipt', this.selectedFile);
         formdata.append('total', this.value);
         formdata.append('supermarket', this.store);
         formdata.append('date', this.date);
         formdata.append('uid', this.$store.state.userID);  
 
-        const response = await UploadService.uploadReceiptData({
-          file: formdata,
-        });
+        const response = await UploadService.uploadReceiptData(formdata);
 
         if(response) {
           this.error = response.data.message;
