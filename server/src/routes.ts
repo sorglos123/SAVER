@@ -1,11 +1,14 @@
+import * as multer from 'multer';
+
 const StatusController = require('./controllers/StatusController');
 const AuthenticationController = require('./controllers/AuthenticationController');
 const UpdateController = require('./controllers/UpdateController');
 const ReceiptController = require('./controllers/ReceiptController');
-import * as multer from 'multer';
+
 const upload = multer({ dest: '../../images' });
 
 module.exports = (app) => {
+    
     /* Route 0: Status */
     app.get('/', StatusController.status);
 
@@ -15,20 +18,18 @@ module.exports = (app) => {
     /* Route 2: Login */
     app.post('/login', AuthenticationController.login);
 
-    /* Route 3: Update user data */
+    /* Route 3: Update von Benutzerdaten */
     app.post('/updateUser', UpdateController.updateUser);
 
-    /* Route 4: Get all receipts for a specific user id*/
+    /* Route 4: Abfrage aller Belege für eine BenutzerID*/
     app.post('/receipts', ReceiptController.getAllReceipts);
 
-    /* Route 5: Get a receipt for a specific date */
+    /* Route 5: Abfrage aller Rezepte eines Benutzers für ein Datum */
     app.post('/calendar', ReceiptController.getReceipt);
 
-    /* Route 6: Get a calendar dates for a specific date */
+    /* Route 6: Hochladen von Belegen inkl. Beleginformationen */
+    app.put('/uploadReceipt',upload.single('receipt'), ReceiptController.uploadReceipt);
+
+    /* Route 7: Abfrage aller Datumsangaben der Belege eines Benutzers (noch nicht implementiert) */
     app.post('/updatecalender', ReceiptController.getDates);
-
-    /* Route 5: Get a calendar dates for a specific date */
-    app.put('/uploadReceipt',upload.single('receipt'), ReceiptController.testUpload);
-
-
 }

@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-    // reject a file
+    /* Zurückweisung einer Datei anhand ihres MIME-Typen */
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
         cb(null, true);
     } else {
@@ -41,12 +41,10 @@ export class Item {
 
 export async function getDates(uid: number) {
     var conn;
-    console.log("getting dates");
     try {
         conn = await pool.getConnection();
         const res = await conn.query("SELECT receipt_date from receipts WHERE user_id = ?;", [uid]);
         if (res == 0) {
-            console.log("no dates");
             throw new Error("no dates");
         }
         else {
@@ -55,7 +53,6 @@ export async function getDates(uid: number) {
     } catch (error) {
         console.log(error);
     } finally {
-        console.log("trying to close");
         if (conn != null) {
             conn.end();
         }
@@ -64,13 +61,11 @@ export async function getDates(uid: number) {
 
 export async function getUserReceipts(uid: number) {
     var conn;
-    console.log('Fetching all recipes...');
     try {
         conn = await pool.getConnection();
         const res = await conn.query("SELECT receipt_id, total_value, receipt_date, supermarket FROM receipts \
     WHERE user_id = ?;", [uid]);
         if (res == 0) {
-            console.log("No receipts found!");
             throw new Error("There were no receipts to fetch.");
         }
         else {
@@ -80,7 +75,6 @@ export async function getUserReceipts(uid: number) {
         console.log(error);
     }
     finally {
-        console.log("trying to close");
         if (conn != null) {
             conn.end();
         }
@@ -89,14 +83,11 @@ export async function getUserReceipts(uid: number) {
 
 export async function getReceipts(uid: number, date: string) {
     var conn;
-    console.log("trying to get receipts");
     try {
         conn = await pool.getConnection();
         const res = await conn.query("SELECT receipt_id, total_value, supermarket FROM receipts \
         WHERE receipt_date = DATE(?) &&  user_id = ?;", [date, uid]);
-
         if (res == 0) {
-            console.log("no dates");
             throw new Error("no dates");
         }
         else {
@@ -106,7 +97,6 @@ export async function getReceipts(uid: number, date: string) {
         console.log(error);
     }
     finally {
-        console.log("trying to close");
         if (conn != null) {
             conn.end();
         }
@@ -116,8 +106,6 @@ export async function getReceipts(uid: number, date: string) {
 export async function getItems(receipts: any) {
     var conn;
     let items: Item[] = [];
-    console.log("trying to get Items");
-    console.log(receipts[0]["receipt_id"]);
     try {
         conn = await pool.getConnection();
         for (let index = 0; index < receipts.length; index++) {
@@ -134,18 +122,16 @@ export async function getItems(receipts: any) {
     } catch (error) {
         console.log(error);
     } finally {
-        console.log("trying to close");
         if (conn != null) {
             conn.end();
         }
     }
 };
 
-export async function  uploadReceipt(uid: number,filepath: string, supermarket: string, date: string, total: number) {
+export async function uploadReceipt(uid: number,filepath: string, supermarket: string, date: string, total: number) {
     var conn;
     let re = /\./gi;
     let dateformat = "%d-%m-%Y";
-    console.log("Insert receipt into db");
     var date_sql_friendly = date.replace(re, "-");
     try {
         conn = await pool.getConnection();

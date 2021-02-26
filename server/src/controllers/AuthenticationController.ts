@@ -33,7 +33,6 @@ module.exports = {
                             })
                         }
                         else {
-                            console.log(error);
                             return res.status(400).send({
                                 error: 'Irgendwas ist schief gegangen ¯\_(ツ)_/¯'
                             })

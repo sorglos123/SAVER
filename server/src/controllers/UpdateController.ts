@@ -5,9 +5,16 @@ const config = require('../config/config');
 
 module.exports = {
     async updateUser(req, res) {
-        //mögliche Fälle: Ändern Benutzername; erforderliche Eingabe: Benutzername + altes Passwort
+        /* Mögliche Fälle: 
+        Fall 1: Änderung PW (altes PW + neues PW benötigt) 
+        Fall 2: Änderung E-Mail (email + altes PW benötigt)
+        Fall 3: Änderung Benutzername (username + altes PW benötigt)
+        Fall 4: Änderung E-Mail und PW (email + altes PW + neues PW benötigt)
+        Fall 5: Änderung Benutzername + PW (username + altes PW + neues PW benötigt)
+        Fall 6: Änderung E-Mail und Benutzername (email + username + altes PW benötigt)
+        Fall 7: Änderung Benutzername, E-Mail und PW (email + username + altes PW + neues PW benötigt) */
 
-        //ändern PW: altes PW + neues PW
+        /* Fall 1: Änderung PW: altes PW + neues PW */
         if ((req.body.uid != '') && (req.body.username == '') && (req.body.email == '') && (req.body.oldpw != '') && (req.body.newpw != '') && (req.body.confirm != '')) {
             console.log("PW wird aktualisiert");
             if (req.body.newpw == req.body.oldpw) {
@@ -23,13 +30,11 @@ module.exports = {
             else {
                 try {
                     const c = new User("NA", req.body.oldpw, req.body.email, req.body.uid);
-                    //altes pw braucht man eigl nicht übergeben, man kann über den angelegten user gehen
                     await c.updateUserPW(req.body.newpw);
                     return res.status(200).send({
                         message: "Das Passwort wurde aktualisiert"
                     })
                 } catch (error) {
-                    console.log(error.message);
                     if (error.message == "Incorrect User/PW") {
                         return res.status(400).send({
                             error: "Das eingegebene Passwort ist nicht korrekt"
@@ -43,7 +48,8 @@ module.exports = {
                 }
             }
         }
-        //ändern EMail: email + altes PW
+        
+        /* Fall 2: Änderung E-Mail: email + altes PW */
         else if ((req.body.uid != '') && (req.body.username == '') && (req.body.email != '') && (req.body.oldpw != '') && (req.body.newpw == '') && (req.body.confirm == '')) {
             console.log("Email wird aktualisiert");
             if (EmailValidator.validate(req.body.email)) {
@@ -54,7 +60,6 @@ module.exports = {
                         message: "Die E-Mail Adresse wurde erfolgreich aktualisiert"
                     })
                 } catch (error) {
-                    console.log(error);
                     if (error.message == "Incorrect User/PW") {
                         return res.status(400).send({
                             error: "Das eingegebene Passwort ist nicht korrekt"
@@ -77,7 +82,8 @@ module.exports = {
                 });
             }
         }
-        //ändern Username: username + altes PW
+        
+        /* Fall 3: Änderung Benutzername: username + altes PW */
         else if ((req.body.uid != '') && (req.body.username != '') && (req.body.email == '') && (req.body.oldpw != '') && (req.body.newpw == '') && (req.body.confirm == '')) {
             console.log("Benutzername wir aktualisiert");
             try {
@@ -87,7 +93,6 @@ module.exports = {
                     message: "Der Benutzername wurde erfolgreich aktualisiert"
                 })
             } catch (error) {
-                console.log(error);
                 if (error.message == "Incorrect User/PW") {
                     return res.status(400).send({
                         error: "Das eingegebene Passwort ist nicht korrekt"
@@ -106,9 +111,8 @@ module.exports = {
             }
         }
 
-        //ändern E-Mail und pw: email + altes pw + neues pw
+        /* Fall 4: Änderung E-Mail und PW: email + altes PW + neues PW */
         else if ((req.body.uid != '') && (req.body.username == '') && (req.body.email != '') && (req.body.oldpw != '') && (req.body.newpw != '') && (req.body.confirm != '')) {
-            console.log("Ändere Email und Passwort");
             if (req.body.newpw == req.body.oldpw) {
                 return res.status(400).send({
                     error: 'Ihr neues Passwort darf nicht mit dem bisherigen Passwort übereinstimmen.'
@@ -152,9 +156,8 @@ module.exports = {
             }
         }
 
-        //ändern Username + pw: username + altes pw + neues pw
+        /* Fall 5: Änderung Benutzername + PW: username + altes PW + neues PW */
         else if ((req.body.uid != '') && (req.body.username != '') && (req.body.email == '') && (req.body.oldpw != '') && (req.body.newpw != '') && (req.body.confirm != '')) {
-            console.log("Ändere username und Passwort");
             if (req.body.newpw == req.body.oldpw) {
                 return res.status(400).send({
                     error: 'Ihr neues Passwort darf nicht mit dem bisherigen Passwort übereinstimmen.'
@@ -194,9 +197,8 @@ module.exports = {
             }
         }
 
-        //ändern E-Mail und Username: email + username + altes pw 
+        /* Fall 6: Änderung E-Mail und Benutzername: email + username + altes PW */
         else if ((req.body.uid != '') && (req.body.username != '') && (req.body.email != '') && (req.body.oldpw != '') && (req.body.newpw == '') && (req.body.confirm == '')) {
-            console.log("Ändere email und username");
             if (!EmailValidator.validate(req.body.email)) {
                 return res.status(400).send({
                     error: 'Bitte geben Sie eine gültige E-Mail-Adresse an.'
@@ -222,7 +224,6 @@ module.exports = {
                         })
                     }
                     else {
-                        console.log(error);
                         return res.status(400).send({
                             error: 'Das sollte nicht passeren.'
                         });
@@ -230,9 +231,9 @@ module.exports = {
                 }
             }
         }
-        //ändern username und email und pw: email + username + altes pw + neues pw
+
+        /* Fall 7: Änderung Benutzername, E-Mail und PW: email + username + altes PW + neues PW */
         else if ((req.body.uid != '') && (req.body.username != '') && (req.body.email != '') && (req.body.oldpw != '') && (req.body.newpw != '') && (req.body.confirm != '')) {
-            console.log("Ändere username, email und pw");
             if (req.body.newpw == req.body.oldpw) {
                 return res.status(400).send({
                     error: 'Ihr neues Passwort darf nicht mit dem bisherigen Passwort übereinstimmen.'
@@ -269,7 +270,6 @@ module.exports = {
                     })
                 }
                 else {
-                    console.log(error);
                     return res.status(400).send({
                         error: 'Das sollte nicht passeren.'
                     });
