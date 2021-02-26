@@ -44,6 +44,7 @@ module.exports = {
             console.log(req.body.total);
             console.log(req.body.date);
             console.log(req.body.supermarket);
+            // Versuch: await r.uploadReceipt(req.body.uid, req.body.file["path"], req.body.supermarket, req.body.date, req.body.total); 
             await r.uploadReceipt(req.body.uid, req.file["path"], req.body.supermarket, req.body.date, req.body.total); 
            
             return res.status(200).send({
@@ -57,5 +58,24 @@ module.exports = {
         }
         
         //  files in req.files ; body in req.body
+    },
+    async testUpload(req, res){
+        try {
+            console.log(req.body.file["path"]); 
+            console.log(req.body.total);
+            console.log(req.body.date);
+            console.log(req.body.supermarket);
+            // Versuch: await r.uploadReceipt(req.body.uid, req.body.file["path"], req.body.supermarket, req.body.date, req.body.total); 
+            // await r.uploadReceipt(req.body.uid, req.file["path"], req.body.supermarket, req.body.date, req.body.total); 
+           
+            return res.status(200).send({
+                message: "Der Beleg wurde erfolgreich ins Backend übertragen"
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(400).send({
+                error: "Etwas ist schiefgegangen."
+            })
+        }
     }
 }

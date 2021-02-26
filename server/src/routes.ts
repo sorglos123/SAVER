@@ -28,7 +28,7 @@ module.exports = (app) => {
     app.post('/updatecalender', ReceiptController.getDates);
 
     /* Route 5: Get a calendar dates for a specific date */
-    app.put('/uploadReceipt',upload.single('receipt'), ReceiptController.uploadReceipt);
+    app.put('/uploadReceipt',upload.single('receipt'), ReceiptController.testUpload);
 
 
 }
