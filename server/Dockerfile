@@ -1,4 +1,4 @@
-FROM node:15.7.0-alpine3.10
+FROM node:16.4.2-alpine3.11
 RUN apk add --no-cache bash
 
 # Create dir inside container 
@@ -9,7 +9,6 @@ COPY ["package.json", "package-lock.json*", "tsconfig.json", "./"]
 
 #Install dependencies
 RUN npm install
-
 
 #Copy sources
 COPY . .
